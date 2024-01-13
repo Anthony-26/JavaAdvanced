@@ -19,7 +19,6 @@ public class FormatStock {
             JsonNode globalQuote = rootNode.get("Global Quote");
 
             StockData sd = new StockData(
-                    globalQuote.get("01. symbol").asText(),
                     new BigDecimal(globalQuote.get("05. price").asText()),
                     new BigDecimal(globalQuote.get("10. change percent").asText().replace("%", "")));
 

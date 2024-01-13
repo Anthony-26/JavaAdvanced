@@ -1,38 +1,38 @@
 package com.example.service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import com.example.model.StockData;
 
 public class StockDataManager {
 
-    private Set<StockData> stockDataList = new HashSet<StockData>();
+    private Map<String, StockData> stockDataMap = new HashMap<>();
 
     public StockDataManager() {
     }
 
-    public StockDataManager(Set<StockData> stockDataList) {
-        this.stockDataList = stockDataList;
-    }
-
-    public Set<String> getRegisteredTickers() {
-        Set<String> stockTickers = new HashSet<>();
-        for(StockData sd : stockDataList){
-            stockTickers.add(sd.getStockTicker());
+    public List<String> getRegisteredTickers() {
+        List<String> stockTickers = new ArrayList<>();
+        for (String ticker : stockDataMap.keySet()) {
+            stockTickers.add(ticker);
         }
         return stockTickers;
     }
 
-    public void setStockDataList(Set<StockData> stockDataList) {
-        this.stockDataList = stockDataList;
+    public Map<String, StockData> getStockDataMap() {
+        return this.stockDataMap;
     }
 
-    public void addStockData(StockData stockData) {
-        if (stockData != null) {
-            stockDataList.add(stockData);
+    public void setStockDataMap(Map<String, StockData> stockDataMap) {
+        this.stockDataMap = stockDataMap;
+    }
+
+    public void addStockData(String ticker, StockData stockData) {
+        if (stockData != null && ticker != null) {
+            stockDataMap.put(ticker, stockData);
         }
     }
 }

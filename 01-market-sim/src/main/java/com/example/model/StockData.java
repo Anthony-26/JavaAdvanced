@@ -4,26 +4,15 @@ import java.math.BigDecimal;
 
 public class StockData {
 
-    private String stockTicker;
     private BigDecimal price;
     private BigDecimal changePercent;
 
     public StockData() {
     }
 
-    public StockData(String stockTicker, BigDecimal price, BigDecimal changePercent) {
-        this.stockTicker = stockTicker;
+    public StockData(BigDecimal price, BigDecimal changePercent) {
         this.price = price;
         this.changePercent = changePercent;
-    }
-
-
-    public String getStockTicker() {
-        return this.stockTicker;
-    }
-
-    public void setStockTicker(String stockTicker) {
-        this.stockTicker = stockTicker;
     }
 
     public BigDecimal getPrice() {
@@ -41,5 +30,11 @@ public class StockData {
     public void setChangePercent(BigDecimal changePercent) {
         this.changePercent = changePercent;
     }
-    
+
+    @Override
+    public String toString() {
+        return "\t0. Price : " + this.getPrice()
+                + "\n\t1. Change (in %) : " + this.getChangePercent() + "%";
+    }
+
 }
