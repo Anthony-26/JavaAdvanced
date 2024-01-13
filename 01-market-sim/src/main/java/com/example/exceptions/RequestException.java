@@ -1,9 +1,13 @@
 package com.example.exceptions;
 
-public class HttpStatusCodeException extends RuntimeException {
+public class RequestException extends RuntimeException {
     private int statusCode;
 
-    public HttpStatusCodeException(int statusCode, String message) {
+    public RequestException(String message) {
+        super(message);
+    }
+
+    public RequestException(String message, int statusCode) {
         super(message);
         this.statusCode = statusCode;
     }
