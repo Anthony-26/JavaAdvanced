@@ -1,19 +1,22 @@
 package com.example.model;
 
+import java.math.BigDecimal;
+
 public class StockData {
 
     private String stockTicker;
-    private int price;
-    private int changePercent;
+    private BigDecimal price;
+    private BigDecimal changePercent;
 
     public StockData() {
     }
 
-    public StockData(String stockTicker, int price, int changePercent) {
+    public StockData(String stockTicker, BigDecimal price, BigDecimal changePercent) {
         this.stockTicker = stockTicker;
         this.price = price;
         this.changePercent = changePercent;
     }
+
 
     public String getStockTicker() {
         return this.stockTicker;
@@ -23,20 +26,20 @@ public class StockData {
         this.stockTicker = stockTicker;
     }
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return this.price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public int getChangePercent() {
+    public BigDecimal getChangePercent() {
         return this.changePercent;
     }
 
-    public void setChangePercent(int changePercent) {
+    public void setChangePercent(BigDecimal changePercent) {
         this.changePercent = changePercent;
     }
-
+    
 }
