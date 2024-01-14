@@ -14,17 +14,28 @@ public class AlphaVantageClient {
 
     public String json_datafi = """
         {
-            "Global Quote": {
-                "01. symbol": "IBM",
-                "02. open": "162.9700",
-                "03. high": "165.9800",
-                "04. low": "162.3550",
-                "05. price": "165.8000",
-                "06. volume": "4958261",
-                "07. latest trading day": "2024-01-12",
-                "08. previous close": "162.1600",
-                "09. change": "3.6400",
-                "10. change percent": "2.2447%"
+            "Meta Data": {
+                "1. Information": "Daily Prices (open, high, low, close) and Volumes",
+                "2. Symbol": "IBM",
+                "3. Last Refreshed": "2024-01-12",
+                "4. Output Size": "Full size",
+                "5. Time Zone": "US/Eastern"
+            },
+            "Time Series (Daily)": {
+                "2024-01-12": {
+                    "1. open": "162.9700",
+                    "2. high": "165.9800",
+                    "3. low": "162.3550",
+                    "4. close": "165.8000",
+                    "5. volume": "4958261"
+                },
+                "2024-01-11": {
+                    "1. open": "161.0200",
+                    "2. high": "162.2300",
+                    "3. low": "160.2900",
+                    "4. close": "162.1600",
+                    "5. volume": "3778395"
+                }
             }
         }""";
 
@@ -43,52 +54,58 @@ public class AlphaVantageClient {
 
         // String dailyStockInformation = "";
 
-        // String uri = String.format("https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=%s&apikey=%s",
-        //         stockTicker, apiKey);
+        // String uri =
+        // String.format("https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=%s&apikey=%s",
+        // stockTicker, apiKey);
 
         // HttpRequest request = HttpRequest.newBuilder()
-        //         .uri(URI.create(uri))
-        //         .build();
+        // .uri(URI.create(uri))
+        // .build();
 
         // try {
-        //     dailyStockInformation = client.sendAsync(request, BodyHandlers.ofString())
+        // dailyStockInformation = client.sendAsync(request, BodyHandlers.ofString())
 
-        //             /* Verifying response status */
-        //             .thenApply(response -> {
-        //                 if (response.statusCode() >= 200 && response.statusCode() < 300) {
-        //                     return response.body();
-        //                 } else {
-        //                     throw new RequestException("HTTP Error", response.statusCode());
-        //                 }
-        //             })
+        // /* Verifying response status */
+        // .thenApply(response -> {
+        // if (response.statusCode() >= 200 && response.statusCode() < 300) {
+        // return response.body();
+        // } else {
+        // throw new RequestException("HTTP Error", response.statusCode());
+        // }
+        // })
 
-        //             /* Verifying body content */
-        //             .thenApply(body -> {
-        //                 if (!body.contains("01. symbol")) {
-        //                     throw new RequestException(
-        //                             "Response does not contain stock information. \n\tReponse : " + body);
-        //                 }
-        //                 return body;
-        //             })
+        // /* Verifying body content */
+        // .thenApply(body -> {
+        // if (!body.contains("01. symbol")) {
+        // throw new RequestException(
+        // "Response does not contain stock information. \n\tReponse : " + body);
+        // }
+        // return body;
+        // })
 
-        //             /* Handling Exceptions */
-        //             .exceptionally(e -> {
-        //                 Throwable cause = e.getCause();
-        //                 if (cause instanceof IOException) {
-        //                     // logger.error("IOException: " + e.getMessage() + ". \n\tRequest : " + uri);
-        //                 } else if (cause instanceof InterruptedException) {
-        //                     // logger.error("InterruptedException: " + ". \n\tRequest : " + uri);
-        //                     Thread.currentThread().interrupt();
-        //                 } else {
-        //                     // logger.error(e.getMessage() + ". \n\tRequest : " + uri);
-        //                 }
-        //                 return null;
-        //             })
-        //             .join();
+        // /* Handling Exceptions */
+        // .exceptionally(e -> {
+        // Throwable cause = e.getCause();
+        // if (cause instanceof IOException) {
+        // // logger.error("IOException: " + e.getMessage() + ". \n\tRequest : " + uri);
+        // } else if (cause instanceof InterruptedException) {
+        // // logger.error("InterruptedException: " + ". \n\tRequest : " + uri);
+        // Thread.currentThread().interrupt();
+        // } else {
+        // // logger.error(e.getMessage() + ". \n\tRequest : " + uri);
+        // }
+        // return null;
+        // })
+        // .join();
         // } catch (Exception e) {
-        //     logger.error("Error caught during the try catch");
-        //     System.err.println(e.getMessage());
+        // logger.error("Error caught during the try catch");
+        // System.err.println(e.getMessage());
         // }
         // return dailyStockInformation;
+    }
+
+    public String getDailyData(String stockTicker) {
+
+        return json_datafi;
     }
 }
