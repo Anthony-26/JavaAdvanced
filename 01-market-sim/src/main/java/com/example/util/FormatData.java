@@ -3,7 +3,6 @@ package com.example.util;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Map;
 import java.util.TreeMap;
 
 import com.example.model.PricesTimeSerie;
@@ -48,9 +47,9 @@ public class FormatData {
                         LocalDate.parse(date, dateTimeFormatter),
                         new PricesTimeSerie(
                                 new BigDecimal(values.get("1. open").asText()),
-                                new BigDecimal(values.get("1. open").asText()),
-                                new BigDecimal(values.get("1. open").asText()),
-                                new BigDecimal(values.get("1. open").asText()),
+                                new BigDecimal(values.get("2. high").asText()),
+                                new BigDecimal(values.get("3. low").asText()),
+                                new BigDecimal(values.get("4. close").asText()),
                                 (values.get("5. volume").asInt())));
             });
 
