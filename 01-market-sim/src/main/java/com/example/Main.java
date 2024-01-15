@@ -5,10 +5,12 @@ import com.example.model.PricesTimeSerie;
 import com.example.service.StockDataManager;
 import com.example.util.FormatData;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.TreeMap;
 
 public class Main {
@@ -91,11 +93,11 @@ public class Main {
                                 System.out.println(
                                         "\nError, this ticker apparently does not exist. Please try again.");
                             } else {
-                                Map<LocalDate, PricesTimeSerie> sortedDailySeries =  FormatData
+                                TreeMap<LocalDate, PricesTimeSerie> dailySeries =  FormatData
                                         .getFormattedTimeSeries(dailyData);
                                 ;
                                 /* Load weekly & monthly series */
-                                if (sortedDailySeries == null) {
+                                if (dailySeries == null) {
                                     System.out.println("\nCannot load the data of " + ticker + ". Please try again.");
                                 } else {
                                     System.out.println("\nData of " + ticker + " successfully loaded.");
@@ -119,16 +121,42 @@ public class Main {
 
                                         case "1":
                                             System.out.println();
-                                            for (LocalDate ld : sortedDailySeries.keySet()) {
+                                            for (LocalDate ld : dailySeries.keySet()) {
                                                 System.out
-                                                        .println(ld.toString() + " " + sortedDailySeries.get(ld).getClose());
+                                                        .println(ld.toString() + " " + dailySeries.get(ld).getClose());
                                             }
                                             break;
 
                                         case "2":
 
-                                            // double last30dHigh = ;
+                                            LocalDate mostRecentDate = dailySeries.lastKey();
+                                            LocalDate dateOneMonthBefore = mostRecentDate.minusMonths(1);
+                                            BigDecimal highest30dPrice = dailySeries.get(mostRecentDate).getHigh();
+                                            BigDecimal lowest30dPrice = dailySeries.get(mostRecentDate).getLow();
 
+                                            for (Map.Entry<LocalDate, PricesTimeSerie> entry : dailySeries
+                                                    .subMap(dateOneMonthBefore, true, mostRecentDate, true)
+                                                    .entrySet()) {
+                                                BigDecimal highPrice = entry.getValue().getHigh();
+                                                BigDecimal lowPrice = entry.getValue().getLow();
+
+                                                /* Debugging output */
+                                                // System.out.println("Date : " + entry.getKey() + " currentHigh : " + highest30dPrice + " compared to newHigh : " + highPrice);
+                                                // System.out.println("Date : " + entry.getKey() + " currentLow : " + lowest30dPrice + " compared to newLow : " + lowPrice);
+
+                                                if (highPrice.compareTo(highest30dPrice) > 0) {
+                                                    highest30dPrice = highPrice;
+                                                } if (lowest30dPrice.compareTo(lowPrice) > 0) {
+                                                    lowest30dPrice = lowPrice;
+                                                }
+                                            }
+
+                                            System.out.println("""
+
+                                                    30 Days High/Low :                  
+                                                        $%,.2f | $%,.2f             
+                                                    """.formatted(highest30dPrice.doubleValue(),
+                                                    lowest30dPrice.doubleValue()));
                                             break;
 
                                         default:
