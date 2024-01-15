@@ -3,10 +3,10 @@ package com.example.util;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
-import com.example.model.DailySerie;
+import com.example.model.PricesTimeSerie;
 import com.example.model.StockData;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -33,9 +33,9 @@ public class FormatData {
         return null;
     }
 
-    public static Map<LocalDate, DailySerie> getFormattedDailySeries(String data) {
+    public static Map<LocalDate, PricesTimeSerie> getFormattedTimeSeries(String data) {
         try {
-            Map<LocalDate, DailySerie> dailySeries = new HashMap<>();
+            Map<LocalDate, PricesTimeSerie> dailySeries = new TreeMap<>();
 
             JsonNode jsonData = objectMapper.readTree(data);
             JsonNode timeSerieDaily = jsonData.get("Time Series (Daily)");
@@ -45,15 +45,13 @@ public class FormatData {
                 String date = timeSerie.getKey();
 
                 dailySeries.put(
-                    LocalDate.parse(date, dateTimeFormatter),
-                    new DailySerie(
-                        new BigDecimal(values.get("1. open").asText()),
-                        new BigDecimal(values.get("1. open").asText()),
-                        new BigDecimal(values.get("1. open").asText()),
-                        new BigDecimal(values.get("1. open").asText()),
-                        (values.get("5. volume").asInt())
-                    )
-                );
+                        LocalDate.parse(date, dateTimeFormatter),
+                        new PricesTimeSerie(
+                                new BigDecimal(values.get("1. open").asText()),
+                                new BigDecimal(values.get("1. open").asText()),
+                                new BigDecimal(values.get("1. open").asText()),
+                                new BigDecimal(values.get("1. open").asText()),
+                                (values.get("5. volume").asInt())));
             });
 
             return dailySeries;

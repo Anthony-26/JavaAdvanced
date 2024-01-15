@@ -2,7 +2,7 @@ package com.example.model;
 
 import java.math.BigDecimal;
 
-public class DailySerie {
+public class PricesTimeSerie {
 
     private BigDecimal open;
     private BigDecimal high;
@@ -10,7 +10,7 @@ public class DailySerie {
     private BigDecimal close;
     private int volume;
 
-    public DailySerie(BigDecimal open, BigDecimal high, BigDecimal low, BigDecimal close, int volume) {
+    public PricesTimeSerie(BigDecimal open, BigDecimal high, BigDecimal low, BigDecimal close, int volume) {
         this.open = open;
         this.high = high;
         this.low = low;

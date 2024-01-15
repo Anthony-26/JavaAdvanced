@@ -1,13 +1,15 @@
 package com.example;
 
 import com.example.api.AlphaVantageClient;
-import com.example.model.DailySerie;
+import com.example.model.PricesTimeSerie;
 import com.example.service.StockDataManager;
 import com.example.util.FormatData;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,9 +21,9 @@ public class Main {
         while (true) {
 
             System.out.println("""
-                    
+
                     -----------------------------------------------
-                    
+
                     Menu :
                         0. Exit
                         1. Adding a stock to the database
@@ -62,11 +64,11 @@ public class Main {
                 case "3":
                     System.out.println("\nEnter a known ticker : ");
                     ticker = scanner.nextLine().toUpperCase();
-                    if(ticker == null){
+                    if (ticker == null) {
                         System.out.println("Ticker unknown.");
                         break;
                     }
-                    if(manager.getRegisteredTickers().contains(ticker)){
+                    if (manager.getRegisteredTickers().contains(ticker)) {
                         System.out.println("\nData about " + ticker + " :");
                         System.out.println(manager.getStockDataMap().get(ticker));
                     }
@@ -89,8 +91,11 @@ public class Main {
                                 System.out.println(
                                         "\nError, this ticker apparently does not exist. Please try again.");
                             } else {
-                                Map<LocalDate, DailySerie> dailySeries = FormatData.getFormattedDailySeries(dailyData);
-                                if (dailySeries == null) {
+                                Map<LocalDate, PricesTimeSerie> sortedDailySeries =  FormatData
+                                        .getFormattedTimeSeries(dailyData);
+                                ;
+                                /* Load weekly & monthly series */
+                                if (sortedDailySeries == null) {
                                     System.out.println("\nCannot load the data of " + ticker + ". Please try again.");
                                 } else {
                                     System.out.println("\nData of " + ticker + " successfully loaded.");
@@ -98,10 +103,11 @@ public class Main {
 
 
                                             -----------------------------------------------
-                                            
+
                                             Option for %s  :
 
                                                 1. Display price (20 last days).
+                                                2. Display data
 
                                             -----------------------------------------------
                                             """.formatted(ticker));
@@ -109,13 +115,20 @@ public class Main {
                                     System.out.print("Select an action : ");
                                     command = scanner.nextLine();
 
-                                    switch(command){
+                                    switch (command) {
 
                                         case "1":
                                             System.out.println();
-                                            for(LocalDate ld : dailySeries.keySet()){
-                                                System.out.println(ld.toString() + " " + dailySeries.get(ld).getClose());
+                                            for (LocalDate ld : sortedDailySeries.keySet()) {
+                                                System.out
+                                                        .println(ld.toString() + " " + sortedDailySeries.get(ld).getClose());
                                             }
+                                            break;
+
+                                        case "2":
+
+                                            // double last30dHigh = ;
+
                                             break;
 
                                         default:
