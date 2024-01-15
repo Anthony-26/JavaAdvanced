@@ -1,9 +1,12 @@
 package com.example;
 
 import com.example.api.AlphaVantageClient;
+import com.example.model.DailySerie;
 import com.example.service.StockDataManager;
 import com.example.util.FormatData;
 
+import java.time.LocalDate;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -16,7 +19,9 @@ public class Main {
         while (true) {
 
             System.out.println("""
-                    \n-----------------------------------------------\n
+                    
+                    -----------------------------------------------
+                    
                     Menu :
                         0. Exit
                         1. Adding a stock to the database
@@ -25,9 +30,9 @@ public class Main {
                         4. Analyze on a specific stock
 
                     -----------------------------------------------
+                    """);
 
-                    Select an action :""");
-
+            System.out.print("Select an action : ");
             String command = scanner.nextLine();
 
             if ("exit".equalsIgnoreCase(command) || "0".equalsIgnoreCase(command)) {
@@ -67,27 +72,60 @@ public class Main {
                     }
                     break;
 
-                    case "4":
-                        while(true) {
-                            System.out.println("\nSelect a stock to analyze :");
-                            ticker = scanner.nextLine();
+                case "4":
+                    while (true) {
+                        System.out.println("\nSelect a stock to analyze :");
+                        ticker = scanner.nextLine().toUpperCase();
 
-                            if(ticker == "0"){
+                        if (ticker == null || ticker.isEmpty()) {
+                            System.out.println("\nPlease enter a valid ticker.");
+                        } else {
+                            if (ticker.equals("0")) {
                                 break;
                             }
-                            
-                            if(ticker == null){
-                                System.out.println("\nPlease enter a valid ticker.");
-                            } else{
-                                String dailyData = client.getDailyData(ticker);
-                                if(dailyData == null){
-                                    System.out.println("\nError, this ticker apparently does not exist. Please try again.");
-                                } else{
-                                    FormatData.getFormattedDailySeries(dailyData);
+                            ticker = ticker.toUpperCase();
+                            String dailyData = client.getDailyData(ticker);
+                            if (dailyData == null) {
+                                System.out.println(
+                                        "\nError, this ticker apparently does not exist. Please try again.");
+                            } else {
+                                Map<LocalDate, DailySerie> dailySeries = FormatData.getFormattedDailySeries(dailyData);
+                                if (dailySeries == null) {
+                                    System.out.println("\nCannot load the data of " + ticker + ". Please try again.");
+                                } else {
+                                    System.out.println("\nData of " + ticker + " successfully loaded.");
+                                    System.out.println("""
+
+
+                                            -----------------------------------------------
+                                            
+                                            Option for %s  :
+
+                                                1. Display price (20 last days).
+
+                                            -----------------------------------------------
+                                            """.formatted(ticker));
+
+                                    System.out.print("Select an action : ");
+                                    command = scanner.nextLine();
+
+                                    switch(command){
+
+                                        case "1":
+                                            System.out.println();
+                                            for(LocalDate ld : dailySeries.keySet()){
+                                                System.out.println(ld.toString() + " " + dailySeries.get(ld).getClose());
+                                            }
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
                                 }
                             }
                         }
-                        break;
+                    }
+                    break;
 
                 default:
                     System.out.println("test");
