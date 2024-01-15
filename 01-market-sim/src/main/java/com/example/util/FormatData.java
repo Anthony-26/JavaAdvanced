@@ -33,9 +33,9 @@ public class FormatData {
         return null;
     }
 
-    public static Map<LocalDate, PricesTimeSerie> getFormattedTimeSeries(String data) {
+    public static TreeMap<LocalDate, PricesTimeSerie> getFormattedTimeSeries(String data) {
         try {
-            Map<LocalDate, PricesTimeSerie> dailySeries = new TreeMap<>();
+            TreeMap<LocalDate, PricesTimeSerie> dailySeries = new TreeMap<>();
 
             JsonNode jsonData = objectMapper.readTree(data);
             JsonNode timeSerieDaily = jsonData.get("Time Series (Daily)");
