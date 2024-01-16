@@ -16,31 +16,17 @@ public class Actions {
         LocalDate dateOneMonthBefore = mostRecentDate.minusMonths(1);
         LocalDate dateOneYearBefore = mostRecentDate.minusYears(1);
 
-        BigDecimal[] last30dExtrems = getExtremLevelsByTime(dailySeries, mostRecentDate, dateOneMonthBefore);
-        BigDecimal[] last52wExtrems = getExtremLevelsByTime(dailySeries, mostRecentDate, dateOneYearBefore);        
+        BigDecimal[] last30dExtrems = getExtremLevelsByTime(dailySeries, dateOneMonthBefore, mostRecentDate);
+        BigDecimal[] last52wExtrems = getExtremLevelsByTime(dailySeries, dateOneYearBefore, mostRecentDate);
 
-        BigDecimal weeklyPerformance = dailySeries.get(mostRecentDate).getClose()
-                .divide(dailySeries.get(dateOneWeekBefore).getOpen(), 4,
-                        java.math.RoundingMode.HALF_UP)
-                .subtract(new BigDecimal("1")).multiply(new BigDecimal("100"));
+        BigDecimal weeklyPerformance = getPerformanceByTime(dailySeries, dateOneWeekBefore, mostRecentDate);
 
-        BigDecimal monthlyPerformance = dailySeries.get(mostRecentDate)
-                .getClose()
-                .divide(dailySeries.get(dateOneMonthBefore).getOpen(), 4,
-                        java.math.RoundingMode.HALF_UP)
-                .subtract(new BigDecimal("1"))
-                .multiply(new BigDecimal("100"));
-
-        BigDecimal yearlyPerformance = dailySeries.get(mostRecentDate)
-                .getClose()
-                .divide(dailySeries.get(dateOneYearBefore).getOpen(), 4,
-                        java.math.RoundingMode.HALF_UP)
-                .subtract(new BigDecimal("1"))
-                .multiply(new BigDecimal("100"));
+        BigDecimal monthlyPerformance = getPerformanceByTime(dailySeries, dateOneMonthBefore, mostRecentDate);
+        BigDecimal yearlyPerformance = getPerformanceByTime(dailySeries, dateOneYearBefore, mostRecentDate);
 
         return """
 
-                /---------------------------------------------------------------------------------------/
+                /--------------------------------------------------------------------/
 
                     Current value :
 
@@ -52,7 +38,7 @@ public class Actions {
                         1 Month : %,.2f%%
                         1 Year  : %,.2f%%
 
-                /---------------------------------------------------------------------------------------/
+                /--------------------------------------------------------------------/
                 """.formatted(
                 last30dExtrems[0].doubleValue(),
                 last30dExtrems[1].doubleValue(),
@@ -65,10 +51,9 @@ public class Actions {
     }
 
     public static BigDecimal[] getExtremLevelsByTime(
-        TreeMap<LocalDate, PricesTimeSerie> Series,
-        LocalDate startingDate,
-        LocalDate endingDate
-        ){
+            TreeMap<LocalDate, PricesTimeSerie> Series,
+            LocalDate startingDate,
+            LocalDate endingDate) {
 
         BigDecimal[] extrems = new BigDecimal[2];
         extrems[0] = Series.get(endingDate).getHigh();
@@ -95,6 +80,20 @@ public class Actions {
         }
 
         return extrems;
+    }
+
+    public static BigDecimal getPerformanceByTime(
+            TreeMap<LocalDate, PricesTimeSerie> Series,
+            LocalDate startingDate,
+            LocalDate endingDate) {
+        BigDecimal performance = Series.get(endingDate)
+                .getClose()
+                .divide(Series.get(startingDate).getOpen(), 4,
+                        java.math.RoundingMode.HALF_UP)
+                .subtract(new BigDecimal("1"))
+                .multiply(new BigDecimal("100"));
+
+        return performance;
     }
 
 }
