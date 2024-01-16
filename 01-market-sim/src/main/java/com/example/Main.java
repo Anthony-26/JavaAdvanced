@@ -3,14 +3,11 @@ package com.example;
 import com.example.api.AlphaVantageClient;
 import com.example.model.PricesTimeSerie;
 import com.example.service.StockDataManager;
+import com.example.util.Actions;
 import com.example.util.FormatData;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.TreeMap;
 
 public class Main {
@@ -88,7 +85,13 @@ public class Main {
                                 break;
                             }
                             ticker = ticker.toUpperCase();
-                            String dailyData = client.getDailyData(ticker);
+
+                            /* WORKING WITH FAKE DATA */
+                            // String dailyData = client.getDailyData(ticker);
+
+                            /* WORKING WITH REAL DATA */
+                            String dailyData = client.getDailyStockInformation(ticker);
+
                             if (dailyData == null) {
                                 System.out.println(
                                         "\nError, this ticker apparently does not exist. Please try again.");
@@ -129,93 +132,9 @@ public class Main {
 
                                         case "2":
 
-                                            LocalDate mostRecentDate = dailySeries.lastKey();
-                                            LocalDate dateOneWeekBefore = mostRecentDate.minusWeeks(1);
-                                            LocalDate dateOneMonthBefore = mostRecentDate.minusMonths(1);
-                                            LocalDate dateOneYearBefore = mostRecentDate.minusYears(1);
-                                            BigDecimal highest30dPrice = dailySeries.get(mostRecentDate).getHigh();
-                                            BigDecimal lowest30dPrice = dailySeries.get(mostRecentDate).getLow();
-                                            BigDecimal highest52wPrice = dailySeries.get(mostRecentDate).getHigh();
-                                            BigDecimal lowest52wPrice = dailySeries.get(mostRecentDate).getLow();
+                                            System.out.println(
+                                                    Actions.getDataFromTreeMap(dailySeries));
 
-                                            for (Map.Entry<LocalDate, PricesTimeSerie> entry : dailySeries
-                                                    .subMap(dateOneMonthBefore, true, mostRecentDate, true)
-                                                    .entrySet()) {
-                                                BigDecimal highPrice = entry.getValue().getHigh();
-                                                BigDecimal lowPrice = entry.getValue().getLow();
-
-                                                /* Debugging output */
-                                                // System.out.println("Date : " + entry.getKey() + " currentHigh : " + highest30dPrice + " compared to newHigh : " + highPrice);
-                                                // System.out.println("Date : " + entry.getKey() + " currentLow : " + lowest30dPrice + " compared to newLow : " + lowPrice);
-
-                                                if (highPrice.compareTo(highest30dPrice) > 0) {
-                                                    highest30dPrice = highPrice;
-                                                } if (lowest30dPrice.compareTo(lowPrice) > 0) {
-                                                    lowest30dPrice = lowPrice;
-                                                }
-                                            }
-
-                                            for (Map.Entry<LocalDate, PricesTimeSerie> entry : dailySeries
-                                                    .subMap(dateOneYearBefore, true, mostRecentDate, true)
-                                                    .entrySet()) {
-                                                BigDecimal highPrice = entry.getValue().getHigh();
-                                                BigDecimal lowPrice = entry.getValue().getLow();
-
-                                                /* Debugging output */
-                                                // System.out.println("Date : " + entry.getKey() + " currentHigh : " + highest30dPrice + " compared to newHigh : " + highPrice);
-                                                // System.out.println("Date : " + entry.getKey() + " currentLow : " + lowest30dPrice + " compared to newLow : " + lowPrice);
-
-                                                if (highPrice.compareTo(highest52wPrice) > 0) {
-                                                    highest52wPrice = highPrice;
-                                                } if (lowest52wPrice.compareTo(lowPrice) > 0) {
-                                                    lowest52wPrice = lowPrice;
-                                                }
-                                            }
-
-                                            BigDecimal weeklyPerformance = dailySeries.get(mostRecentDate).getClose()
-                                                    .divide(dailySeries.get(dateOneWeekBefore).getOpen(), 4,
-                                                            java.math.RoundingMode.HALF_UP)
-                                                    .subtract(new BigDecimal("1")).multiply(new BigDecimal("100"));
-
-                                            BigDecimal monthlyPerformance = dailySeries.get(mostRecentDate)
-                                                    .getClose()
-                                                    .divide(dailySeries.get(dateOneMonthBefore).getOpen(), 4,
-                                                            java.math.RoundingMode.HALF_UP)
-                                                    .subtract(new BigDecimal("1"))
-                                                    .multiply(new BigDecimal("100"));
-
-                                            BigDecimal yearlyPerformance = dailySeries.get(mostRecentDate)
-                                                    .getClose()
-                                                    .divide(dailySeries.get(dateOneYearBefore).getOpen(), 4,
-                                                            java.math.RoundingMode.HALF_UP)
-                                                    .subtract(new BigDecimal("1"))
-                                                    .multiply(new BigDecimal("100"));
-
-                                            System.out.println("""
-
-                                                    /---------------------------------------------------------------------------------------/
-                                                        
-                                                        Current value :                                                 
-                                                                                                                          
-                                                        30 Days High/Low  : $%,.2f | $%,.2f    
-                                                        52 Weeks High/Low : $%,.2f | $%,.2f                  
-                                                                                             
-                                                        Global Performance :   
-                                                            1 Week  : %,.2f%%   
-                                                            1 Month : %,.2f%%  
-                                                            1 Year  : %,.2f%% 
-
-                                                    /---------------------------------------------------------------------------------------/
-                                                    """.formatted(
-                                                        highest30dPrice.doubleValue(),
-                                                        lowest30dPrice.doubleValue(),
-                                                        highest52wPrice.doubleValue(),
-                                                        lowest52wPrice.doubleValue(),
-                                                        weeklyPerformance.doubleValue(),
-                                                        monthlyPerformance.doubleValue(),
-                                                        yearlyPerformance.doubleValue()
-                                                        )
-                                            );
                                             break;
 
                                         default:
@@ -228,12 +147,10 @@ public class Main {
                     break;
 
                 default:
-                    System.out.println("test");
+                    System.out.println("  Please select a valid action or type \"exit\".");
                     break;
             }
-
         }
         scanner.close();
-
     }
 }
