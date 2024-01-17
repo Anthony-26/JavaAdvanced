@@ -64,10 +64,10 @@ public class Main {
                     System.out.println("\nHere is your ticker list : ");
                     System.out.println(stockList);
                 }
-                    System.out.print("\n\nEnter a ticker to analyze the asset : ");
+                    System.out.print("\n\nEnter a ticker to analyze : ");
                     ticker = scanner.nextLine().toUpperCase();
 
-                    if(ticker == null || ticker.isEmpty() || ticker.length() > 5 || ticker.matches("[A-Za-z]+")){
+                    if(ticker == null || ticker.isEmpty() || ticker.length() > 5 || !ticker.matches("[A-Za-z]+")){
                         System.out.println("\nPlease enter a valid ticker.");
                         break;
                     }
@@ -77,15 +77,20 @@ public class Main {
                         System.out.println(ticker + " added in the stock list.");
                     }
 
-                    String dailyData = client.getDailyStockInformation(ticker);
+                    String stringDailyData = client.getDailyStockInformation(ticker);
 
-                    if (dailyData == null) {
+                    // String stringWeeklyData = client.getWeeklyInformation(ticker);
+
+                    if (stringDailyData == null) {
                         System.out.println(
                                 "\nError, this ticker apparently does not exist. Please try again.");
                         stockList.remove(ticker);
-                        System.out.println(ticker + " has been removed from the stock list.");
+                        System.out.println(ticker + " has been removed from the stock list due to the error.");
                         break;
                     }
+                    TreeMap<LocalDate, PricesTimeSerie> dailySeries =  FormatData
+                        .getFormattedTimeSeries(stringDailyData);
+                    System.out.println(Actions.getDataFromTreeMap(dailySeries, ticker));
 
                     break;
 
@@ -107,13 +112,13 @@ public class Main {
                             // String dailyData = client.getDailyData(ticker);
 
                             /* WORKING WITH REAL DATA */
-                            dailyData = client.getDailyStockInformation(ticker);
+                            String dailyData = client.getDailyStockInformation(ticker);
 
                             if (dailyData == null) {
                                 System.out.println(
                                         "\nError, this ticker apparently does not exist. Please try again.");
                             } else {
-                                TreeMap<LocalDate, PricesTimeSerie> dailySeries =  FormatData
+                               dailySeries =  FormatData
                                         .getFormattedTimeSeries(dailyData);
                                 ;
                                 /* Load weekly & monthly series */
