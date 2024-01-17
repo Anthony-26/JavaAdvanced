@@ -19102,60 +19102,56 @@ public class AlphaVantageClient {
 
     public String getDailyStockInformation(String stockTicker) {
 
-        return json_datafi_daily;
+        String dailyStockInformation = "";
 
-        /* Uncomment for real data */
+        String uri =
+        String.format("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol=%s&apikey=%s",
+        stockTicker, apiKey);
 
-        // String dailyStockInformation = "";
+        HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create(uri))
+        .build();
 
-        // String uri =
-        // String.format("https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=%s&apikey=%s",
-        // stockTicker, apiKey);
+        try {
+            dailyStockInformation = client.sendAsync(request, BodyHandlers.ofString())
 
-        // HttpRequest request = HttpRequest.newBuilder()
-        // .uri(URI.create(uri))
-        // .build();
+                    /* Verifying response status */
+                    .thenApply(response -> {
+                        if (response.statusCode() >= 200 && response.statusCode() < 300) {
+                            return response.body();
+                        } else {
+                            throw new RequestException("HTTP Error", response.statusCode());
+                        }
+                    })
 
-        // try {
-        // dailyStockInformation = client.sendAsync(request, BodyHandlers.ofString())
+                    /* Verifying body content */
+                    .thenApply(body -> {
+                        if (!body.contains("Time Series (Daily)")) {
+                            throw new RequestException(
+                                    "Response does not contain stock information. \n\tReponse : " + body);
+                        }
+                        return body;
+                    })
 
-        // /* Verifying response status */
-        // .thenApply(response -> {
-        // if (response.statusCode() >= 200 && response.statusCode() < 300) {
-        // return response.body();
-        // } else {
-        // throw new RequestException("HTTP Error", response.statusCode());
-        // }
-        // })
-
-        // /* Verifying body content */
-        // .thenApply(body -> {
-        // if (!body.contains("01. symbol")) {
-        // throw new RequestException(
-        // "Response does not contain stock information. \n\tReponse : " + body);
-        // }
-        // return body;
-        // })
-
-        // /* Handling Exceptions */
-        // .exceptionally(e -> {
-        // Throwable cause = e.getCause();
-        // if (cause instanceof IOException) {
-        // // logger.error("IOException: " + e.getMessage() + ". \n\tRequest : " + uri);
-        // } else if (cause instanceof InterruptedException) {
-        // // logger.error("InterruptedException: " + ". \n\tRequest : " + uri);
-        // Thread.currentThread().interrupt();
-        // } else {
-        // // logger.error(e.getMessage() + ". \n\tRequest : " + uri);
-        // }
-        // return null;
-        // })
-        // .join();
-        // } catch (Exception e) {
-        // logger.error("Error caught during the try catch");
-        // System.err.println(e.getMessage());
-        // }
-        // return dailyStockInformation;
+                    /* Handling Exceptions */
+                    .exceptionally(e -> {
+                        Throwable cause = e.getCause();
+                        if (cause instanceof IOException) {
+                            // logger.error("IOException: " + e.getMessage() + ". \n\tRequest : " + uri);
+                        } else if (cause instanceof InterruptedException) {
+                            // logger.error("InterruptedException: " + ". \n\tRequest : " + uri);
+                            Thread.currentThread().interrupt();
+                        } else {
+                            // logger.error(e.getMessage() + ". \n\tRequest : " + uri);
+                        }
+                        return null;
+                    })
+                    .join();
+        } catch (Exception e) {
+            logger.error("Error caught during the try catch");
+            System.err.println(e.getMessage());
+        }
+        return dailyStockInformation;
     }
 
     public String getDailyData(String stockTicker) {
