@@ -2,6 +2,7 @@ package com.example.util;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -9,7 +10,7 @@ import com.example.model.PricesTimeSerie;
 
 public class Actions {
 
-    public static String getDataFromTreeMap(TreeMap<LocalDate, PricesTimeSerie> dailySeries) {
+    public static String getDataFromTreeMap(TreeMap<LocalDate, PricesTimeSerie> dailySeries, String ticker) {
 
         LocalDate mostRecentDate = dailySeries.lastKey();
         BigDecimal mostRecentValue = dailySeries.get(mostRecentDate).getClose();
@@ -30,7 +31,7 @@ public class Actions {
 
                 /--------------------------------------------------------------------/
 
-                    Last known value (%s) : $%,.2f 
+                    Last known value (%s) for %s : $%,.2f 
 
                     30 Days High/Low  : $%,.2f | $%,.2f
                     52 Weeks High/Low : $%,.2f | $%,.2f
@@ -43,6 +44,7 @@ public class Actions {
                 /--------------------------------------------------------------------/
                 """.formatted(
                 mostRecentDate.toString(),
+                ticker,
                 mostRecentValue.doubleValue(),
                 last30dExtrems[0].doubleValue(),
                 last30dExtrems[1].doubleValue(),
@@ -109,6 +111,14 @@ public class Actions {
             }
         }
         return dateToSynchronize;
+    }
+
+    private static ArrayList<BigDecimal> getFractals(TreeMap<LocalDate, PricesTimeSerie> series){
+        for(Map.Entry<LocalDate, PricesTimeSerie> entry : series.entrySet()){
+            
+        }
+
+        return null;
     }
 
 }
