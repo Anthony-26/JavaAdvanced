@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.example.model.Fractals;
 import com.example.model.PricesTimeSerie;
 
 public class Actions {
@@ -113,12 +114,52 @@ public class Actions {
         return dateToSynchronize;
     }
 
-    private static ArrayList<BigDecimal> getFractals(TreeMap<LocalDate, PricesTimeSerie> series){
-        for(Map.Entry<LocalDate, PricesTimeSerie> entry : series.entrySet()){
-            
+    public static Fractals getFractals(TreeMap<LocalDate, PricesTimeSerie> series){
+        TreeMap<LocalDate, BigDecimal> bearishFractal = new TreeMap<>();
+        TreeMap<LocalDate, BigDecimal> bullishFractal = new TreeMap<>();
+
+        ArrayList<LocalDate> dates = new ArrayList<>(series.keySet());
+
+        if(dates.size() < 2){
+            return null;
         }
 
-        return null;
+        LocalDate currentDate;
+        PricesTimeSerie currentSeries;
+
+        PricesTimeSerie prevSeries1;
+        PricesTimeSerie prevSeries2;
+        PricesTimeSerie nextSeries1;
+        PricesTimeSerie nextSeries2;
+
+        for (int i = 2; i < dates.size(); i++) {
+
+            currentDate = dates.get(i);
+            currentSeries = series.get(currentDate);
+
+            prevSeries1 = series.get(dates.get(i - 1));
+            prevSeries2 = series.get(dates.get(i - 2));
+            nextSeries1 = series.get(dates.get(i + 1));
+            nextSeries2 = series.get(dates.get(i + 2));
+
+            if (currentSeries.getHigh().compareTo(prevSeries1.getHigh()) > 0 &&
+                    currentSeries.getHigh().compareTo(prevSeries2.getHigh()) > 0 &&
+                    currentSeries.getHigh().compareTo(nextSeries1.getHigh()) > 0 &&
+                    currentSeries.getHigh().compareTo(nextSeries2.getHigh()) > 0) {
+                bearishFractal.put(currentDate, currentSeries.getHigh());
+            }
+
+            if (currentSeries.getLow().compareTo(prevSeries1.getLow()) < 0 &&
+                    currentSeries.getLow().compareTo(prevSeries2.getLow()) < 0 &&
+                    currentSeries.getLow().compareTo(nextSeries1.getLow()) < 0 &&
+                    currentSeries.getLow().compareTo(nextSeries2.getLow()) < 0) {
+                bullishFractal.put(currentDate, currentSeries.getLow());
+            }
+
+        }
+        Fractals fractals = new Fractals(bearishFractal, bullishFractal);
+
+        return fractals;
     }
 
 }
