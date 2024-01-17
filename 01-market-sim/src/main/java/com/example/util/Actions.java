@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.example.model.Fractals;
+import com.example.model.Fractal;
 import com.example.model.PricesTimeSerie;
 
 public class Actions {
@@ -114,7 +114,7 @@ public class Actions {
         return dateToSynchronize;
     }
 
-    public static Fractals getFractals(TreeMap<LocalDate, PricesTimeSerie> series){
+    public static Fractal getFractals(TreeMap<LocalDate, PricesTimeSerie> series){
         TreeMap<LocalDate, BigDecimal> bearishFractal = new TreeMap<>();
         TreeMap<LocalDate, BigDecimal> bullishFractal = new TreeMap<>();
 
@@ -132,7 +132,7 @@ public class Actions {
         PricesTimeSerie nextSeries1;
         PricesTimeSerie nextSeries2;
 
-        for (int i = 2; i < dates.size(); i++) {
+        for (int i = 2; i < dates.size() - 2; i++) {
 
             currentDate = dates.get(i);
             currentSeries = series.get(currentDate);
@@ -157,7 +157,7 @@ public class Actions {
             }
 
         }
-        Fractals fractals = new Fractals(bearishFractal, bullishFractal);
+        Fractal fractals = new Fractal(bearishFractal, bullishFractal);
 
         return fractals;
     }

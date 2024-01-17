@@ -1,6 +1,7 @@
 package com.example;
 
 import com.example.api.AlphaVantageClient;
+import com.example.model.Fractal;
 import com.example.model.PricesTimeSerie;
 import com.example.service.StockDataManager;
 import com.example.util.Actions;
@@ -42,8 +43,14 @@ public class Main {
                 System.out.println("Exiting program.");
                 break;
             }
-
+            
             switch (command) {
+                case "5":
+                    TreeMap<LocalDate, PricesTimeSerie> weeklydata = FormatData.getFormattedTimeSeriesTEST("test");
+                    Fractal f = Actions.getFractals(weeklydata);
+                    System.out.println(f.getBearishFractals());
+                    break;
+
                 case "1":
                     System.out.print("\nEnter stock ticker : ");
                     String ticker = scanner.nextLine().toUpperCase();
@@ -154,8 +161,8 @@ public class Main {
 
                                         case "2":
 
-                                            System.out.println(
-                                                    Actions.getDataFromTreeMap(dailySeries));
+                                            // System.out.println(
+                                            //         Actions.getDataFromTreeMap(dailySeries));
 
                                             break;
 
