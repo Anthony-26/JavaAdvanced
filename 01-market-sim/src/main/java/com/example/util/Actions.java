@@ -12,6 +12,7 @@ public class Actions {
     public static String getDataFromTreeMap(TreeMap<LocalDate, PricesTimeSerie> dailySeries) {
 
         LocalDate mostRecentDate = dailySeries.lastKey();
+        BigDecimal mostRecentValue = dailySeries.get(mostRecentDate).getClose();
 
         LocalDate dateOneWeekBefore = synchronizeDates(dailySeries, mostRecentDate.minusWeeks(1));
         LocalDate dateOneMonthBefore = synchronizeDates(dailySeries, mostRecentDate.minusMonths(1));
@@ -29,7 +30,7 @@ public class Actions {
 
                 /--------------------------------------------------------------------/
 
-                    Current value :
+                    Last known value (%s) : $%,.2f 
 
                     30 Days High/Low  : $%,.2f | $%,.2f
                     52 Weeks High/Low : $%,.2f | $%,.2f
@@ -41,6 +42,8 @@ public class Actions {
 
                 /--------------------------------------------------------------------/
                 """.formatted(
+                mostRecentDate.toString(),
+                mostRecentValue.doubleValue(),
                 last30dExtrems[0].doubleValue(),
                 last30dExtrems[1].doubleValue(),
                 last52wExtrems[0].doubleValue(),
