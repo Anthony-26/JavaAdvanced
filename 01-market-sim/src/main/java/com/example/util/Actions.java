@@ -12,9 +12,10 @@ public class Actions {
     public static String getDataFromTreeMap(TreeMap<LocalDate, PricesTimeSerie> dailySeries) {
 
         LocalDate mostRecentDate = dailySeries.lastKey();
-        LocalDate dateOneWeekBefore = mostRecentDate.minusWeeks(1);
-        LocalDate dateOneMonthBefore = mostRecentDate.minusMonths(1);
-        LocalDate dateOneYearBefore = mostRecentDate.minusYears(1);
+
+        LocalDate dateOneWeekBefore = synchronizeDates(dailySeries, mostRecentDate.minusWeeks(1));
+        LocalDate dateOneMonthBefore = synchronizeDates(dailySeries, mostRecentDate.minusMonths(1));
+        LocalDate dateOneYearBefore = synchronizeDates(dailySeries, mostRecentDate.minusYears(1));
 
         BigDecimal[] last30dExtrems = getExtremLevelsByTime(dailySeries, dateOneMonthBefore, mostRecentDate);
         BigDecimal[] last52wExtrems = getExtremLevelsByTime(dailySeries, dateOneYearBefore, mostRecentDate);
@@ -94,6 +95,17 @@ public class Actions {
                 .multiply(new BigDecimal("100"));
 
         return performance;
+    }
+
+    private static LocalDate synchronizeDates(TreeMap<LocalDate, PricesTimeSerie> series, LocalDate dateToSynchronize) {
+        if (series.containsKey(dateToSynchronize))
+            return dateToSynchronize;
+        else {
+            while (!series.containsKey(dateToSynchronize)) {
+                dateToSynchronize = dateToSynchronize.plusDays(1);
+            }
+        }
+        return dateToSynchronize;
     }
 
 }
