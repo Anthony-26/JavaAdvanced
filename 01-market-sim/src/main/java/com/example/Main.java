@@ -7,6 +7,8 @@ import com.example.util.Actions;
 import com.example.util.FormatData;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.TreeMap;
 
@@ -16,6 +18,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         StockDataManager manager = new StockDataManager();
         AlphaVantageClient client = new AlphaVantageClient();
+        List<String> stockList = new ArrayList<>();
 
         while (true) {
 
@@ -25,10 +28,9 @@ public class Main {
 
                     Menu :
                         0. Exit
-                        1. Adding a stock to the database
+                        1. Add a stock to the stock list
                         2. Display the current stock list
-                        3. Get stock information
-                        4. Analyze on a specific stock
+                        3. Analyze stock
 
                     -----------------------------------------------
                     """);
@@ -43,38 +45,53 @@ public class Main {
 
             switch (command) {
                 case "1":
-                    System.out.println("\nEnter stock ticker:");
-                    String ticker = scanner.nextLine();
-                    String s = ticker == null ? null : client.getDailyStockInformation(ticker);
-                    if (s == null) {
-                        System.out.println("\nError, " + ticker + " may not be an existig value and cannot be null.");
+                    System.out.print("\nEnter stock ticker : ");
+                    String ticker = scanner.nextLine().toUpperCase();
+                    if(ticker == null || ticker.isEmpty() || ticker.length() > 5 || !ticker.matches("[A-Za-z]+")){
+                        System.out.println("\nPlease enter a valid ticker.");
                         break;
                     }
-                    manager.addStockData(ticker.toUpperCase(), FormatData.FormatDataDaily(s));
-                    System.out.println("Stock Data: " + s);
+                    stockList.add(ticker);
+                    System.out.println(ticker + " successfully added in the asset list.");
                     break;
 
                 case "2":
-                    System.out
-                            .println("\nThe current list contains " + manager.getStockDataMap().size() + " stock(s).");
-                    System.out.println(manager.getRegisteredTickers());
+                    System.out.println(stockList);
                     break;
 
                 case "3":
-                    System.out.println("\nEnter a known ticker : ");
+                if(stockList.size() > 0){
+                    System.out.println("\nHere is your ticker list : ");
+                    System.out.println(stockList);
+                }
+                    System.out.print("\n\nEnter a ticker to analyze the asset : ");
                     ticker = scanner.nextLine().toUpperCase();
-                    if (ticker == null) {
-                        System.out.println("Ticker unknown.");
+
+                    if(ticker == null || ticker.isEmpty() || ticker.length() > 5 || ticker.matches("[A-Za-z]+")){
+                        System.out.println("\nPlease enter a valid ticker.");
                         break;
                     }
-                    if (manager.getRegisteredTickers().contains(ticker)) {
-                        System.out.println("\nData about " + ticker + " :");
-                        System.out.println(manager.getStockDataMap().get(ticker));
+
+                    if(!stockList.contains(ticker)){
+                        stockList.add(ticker);
+                        System.out.println(ticker + " added in the stock list.");
                     }
+
+                    String dailyData = client.getDailyStockInformation(ticker);
+
+                    if (dailyData == null) {
+                        System.out.println(
+                                "\nError, this ticker apparently does not exist. Please try again.");
+                        stockList.remove(ticker);
+                        System.out.println(ticker + " has been removed from the stock list.");
+                        break;
+                    }
+
                     break;
 
                 case "4":
                     while (true) {
+                        
                         System.out.println("\nSelect a stock to analyze :");
                         ticker = scanner.nextLine().toUpperCase();
 
@@ -90,7 +107,7 @@ public class Main {
                             // String dailyData = client.getDailyData(ticker);
 
                             /* WORKING WITH REAL DATA */
-                            String dailyData = client.getDailyStockInformation(ticker);
+                            dailyData = client.getDailyStockInformation(ticker);
 
                             if (dailyData == null) {
                                 System.out.println(
