@@ -19093,6 +19093,8 @@ public class AlphaVantageClient {
             }
         }""";
 
+    private String baseURI = "https://www.alphavantage.co/";
+
     private String apiKey = System.getenv("AV_API_KEY");
     // private String apiKey = null;
 
@@ -19104,13 +19106,12 @@ public class AlphaVantageClient {
 
         String dailyStockInformation = "";
 
-        String uri =
-        String.format("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol=%s&apikey=%s",
-        stockTicker, apiKey);
+        String uri = baseURI + String.format("query?function=TIME_SERIES_DAILY&outputsize=full&symbol=%s&apikey=%s",
+                        stockTicker, apiKey);
 
         HttpRequest request = HttpRequest.newBuilder()
-        .uri(URI.create(uri))
-        .build();
+                .uri(URI.create(uri))
+                .build();
 
         try {
             dailyStockInformation = client.sendAsync(request, BodyHandlers.ofString())
@@ -19157,5 +19158,57 @@ public class AlphaVantageClient {
     public String getDailyData(String stockTicker) {
 
         return json_datafi_daily;
+    }
+
+    public String getWeeklyStockInformation(String stockTicker){
+
+        String weeklyStockInformation = "";
+        String uri = baseURI + String.format("query?function=TIME_SERIES_WEEKLY&outputsize=full&symbol=%s&apikey=%s",
+                        stockTicker, apiKey);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(uri))
+                .build();
+
+        try {
+            weeklyStockInformation = client.sendAsync(request, BodyHandlers.ofString())
+
+                    /* Verifying response status */
+                    .thenApply(response -> {
+                        if (response.statusCode() >= 200 && response.statusCode() < 300) {
+                            return response.body();
+                        } else {
+                            throw new RequestException("HTTP Error", response.statusCode());
+                        }
+                    })
+
+                    /* Verifying body content */
+                    .thenApply(body -> {
+                        if (!body.contains("Weekly Time Series")) {
+                            throw new RequestException(
+                                    "Response does not contain stock information. \n\tReponse : " + body);
+                        }
+                        return body;
+                    })
+
+                    /* Handling Exceptions */
+                    .exceptionally(e -> {
+                        Throwable cause = e.getCause();
+                        if (cause instanceof IOException) {
+                            // logger.error("IOException: " + e.getMessage() + ". \n\tRequest : " + uri);
+                        } else if (cause instanceof InterruptedException) {
+                            // logger.error("InterruptedException: " + ". \n\tRequest : " + uri);
+                            Thread.currentThread().interrupt();
+                        } else {
+                            // logger.error(e.getMessage() + ". \n\tRequest : " + uri);
+                        }
+                        return null;
+                    })
+                    .join();
+        } catch (Exception e) {
+            logger.error("Error caught during the try catch");
+            System.err.println(e.getMessage());
+        }
+        return weeklyStockInformation;
     }
 }
