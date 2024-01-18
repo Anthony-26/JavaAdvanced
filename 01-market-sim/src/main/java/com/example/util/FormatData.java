@@ -8885,18 +8885,29 @@ public class FormatData {
         return null;
     }
 
-    public static TreeMap<LocalDate, PricesTimeSerie> getFormattedTimeSeries(String data) {
+    public static TreeMap<LocalDate, PricesTimeSerie> getFormattedTimeSeries(String data, String type) {
         try {
-            TreeMap<LocalDate, PricesTimeSerie> dailySeries = new TreeMap<>();
+            TreeMap<LocalDate, PricesTimeSerie> series = new TreeMap<>();
 
             JsonNode jsonData = objectMapper.readTree(data);
-            JsonNode timeSerieDaily = jsonData.get("Time Series (Daily)");
+            JsonNode timeSeries = null;
 
-            timeSerieDaily.fields().forEachRemaining(timeSerie -> {
+            if(type == null){
+                return null;
+            }
+
+            if(type.equals("daily"))
+                timeSeries = jsonData.get("Time Series (Daily)");
+            
+            if(type.equals("weekly")){
+                timeSeries = jsonData.get("Weekly Time Series");
+            }
+            
+            timeSeries.fields().forEachRemaining(timeSerie -> {
                 JsonNode values = timeSerie.getValue();
                 String date = timeSerie.getKey();
 
-                dailySeries.put(
+                series.put(
                         LocalDate.parse(date, dateTimeFormatter),
                         new PricesTimeSerie(
                                 new BigDecimal(values.get("1. open").asText()),
@@ -8906,36 +8917,7 @@ public class FormatData {
                                 (values.get("5. volume").asInt())));
             });
 
-            return dailySeries;
-
-        } catch (JsonProcessingException e) {
-
-        }
-        return null;
-    }
-
-    public static TreeMap<LocalDate, PricesTimeSerie> getFormattedTimeSeriesTEST(String data) {
-        try {
-            TreeMap<LocalDate, PricesTimeSerie> weeklySeries = new TreeMap<>();
-
-            JsonNode jsonData = objectMapper.readTree(wekklyTestData);
-            JsonNode timeSerieDaily = jsonData.get("Weekly Time Series");
-
-            timeSerieDaily.fields().forEachRemaining(timeSerie -> {
-                JsonNode values = timeSerie.getValue();
-                String date = timeSerie.getKey();
-
-                weeklySeries.put(
-                        LocalDate.parse(date, dateTimeFormatter),
-                        new PricesTimeSerie(
-                                new BigDecimal(values.get("1. open").asText()),
-                                new BigDecimal(values.get("2. high").asText()),
-                                new BigDecimal(values.get("3. low").asText()),
-                                new BigDecimal(values.get("4. close").asText()),
-                                (values.get("5. volume").asInt())));
-            });
-
-            return weeklySeries;
+            return series;
 
         } catch (JsonProcessingException e) {
 
