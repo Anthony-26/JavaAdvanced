@@ -17,7 +17,6 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        StockDataManager manager = new StockDataManager();
         AlphaVantageClient client = new AlphaVantageClient();
         List<String> stockList = new ArrayList<>();
 
@@ -33,6 +32,8 @@ public class Main {
                         2. Display the current stock list
                         3. Analyze stock
 
+                        5- test pivot point
+
                     -----------------------------------------------
                     """);
 
@@ -46,8 +47,12 @@ public class Main {
             
             switch (command) {
                 case "5":
-                    TreeMap<LocalDate, PricesTimeSerie> weeklydata = FormatData.getFormattedTimeSeriesTEST("test");
-                    Fractal f = Actions.getFractals(weeklydata);
+                    String wd = client.getWeeklyStockInformation("IBM");
+
+                    TreeMap<LocalDate, PricesTimeSerie> weeklySeries =  FormatData
+                        .getFormattedTimeSeries(wd, "weekly");
+
+                    Fractal f = Actions.getFractals(weeklySeries);
                     System.out.println(f.getBearishFractals());
                     break;
 
@@ -96,7 +101,7 @@ public class Main {
                         break;
                     }
                     TreeMap<LocalDate, PricesTimeSerie> dailySeries =  FormatData
-                        .getFormattedTimeSeries(stringDailyData);
+                        .getFormattedTimeSeries(stringDailyData, "daily");
                     System.out.println(Actions.getDataFromTreeMap(dailySeries, ticker));
 
                     break;
@@ -126,7 +131,7 @@ public class Main {
                                         "\nError, this ticker apparently does not exist. Please try again.");
                             } else {
                                dailySeries =  FormatData
-                                        .getFormattedTimeSeries(dailyData);
+                                        .getFormattedTimeSeries(dailyData, "daily");
                                 ;
                                 /* Load weekly & monthly series */
                                 if (dailySeries == null) {
