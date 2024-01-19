@@ -78,4 +78,15 @@ public class AlphaVantageClient {
         }
         return timeSeries.equals("") ? null : timeSeries;
     }
+
+    public String getEMA(String ticker, String interval, int timePeriod){
+        /* Getting from the ticker the EMA */
+
+        String uri = baseURI + String.format("query?function=EMA&symbol=%s&interval=%s&time_period=%d&series_type=close&apikey=%s", ticker, interval, timePeriod, apiKey);
+        
+        
+
+        return null;
+    }
+
 }
