@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
+import java.net.http.HttpResponse.BodyHandler;
 import java.net.http.HttpResponse.BodyHandlers;
 
 import org.apache.logging.log4j.*;
@@ -79,14 +80,27 @@ public class AlphaVantageClient {
         return timeSeries.equals("") ? null : timeSeries;
     }
 
-    public String getEMA(String ticker, String interval, int timePeriod){
+    public String getEMA(String ticker, String interval, int timePeriod) {
         /* Getting from the ticker the EMA */
 
-        String uri = baseURI + String.format("query?function=EMA&symbol=%s&interval=%s&time_period=%d&series_type=close&apikey=%s", ticker, interval, timePeriod, apiKey);
-        
-        
+        String uri = baseURI
+                + String.format("query?function=EMA&symbol=%s&interval=%s&time_period=%d&series_type=close&apikey=%s",
+                        ticker, interval, timePeriod, apiKey);
 
-        return null;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(uri))
+                .build();
+
+        String ts = client.sendAsync(request, BodyHandlers.ofString())
+                .thenApply(response -> {
+                    String body = response.body();
+                    if (!body.contains("Technical Analysis: EMA"))
+                        return null;
+                    return body;
+                })
+                .join();
+
+        return ts;
     }
 
 }
