@@ -33,6 +33,7 @@ public class Main {
                         3. Analyze stock
 
                         5- test pivot point
+                        6- test EMA
 
                     -----------------------------------------------
                     """);
@@ -46,8 +47,13 @@ public class Main {
             }
             
             switch (command) {
+                case "6":
+
+                    String ema = client.getEMA("IBM", "weekly", 9);
+                    System.out.println(ema);
+                
                 case "5":
-                    String wd = client.getWeeklyStockInformation("IBM");
+                    String wd = client.getSeries("IBM", "weekly");
 
                     TreeMap<LocalDate, PricesTimeSerie> weeklySeries =  FormatData
                         .getFormattedTimeSeries(wd, "weekly");
@@ -89,7 +95,7 @@ public class Main {
                         System.out.println(ticker + " added in the stock list.");
                     }
 
-                    String stringDailyData = client.getDailyStockInformation(ticker);
+                    String stringDailyData = client.getSeries(ticker, "daily");
 
                     // String stringWeeklyData = client.getWeeklyInformation(ticker);
 
@@ -124,7 +130,7 @@ public class Main {
                             // String dailyData = client.getDailyData(ticker);
 
                             /* WORKING WITH REAL DATA */
-                            String dailyData = client.getDailyStockInformation(ticker);
+                            String dailyData = client.getSeries(ticker, "daily");
 
                             if (dailyData == null) {
                                 System.out.println(
