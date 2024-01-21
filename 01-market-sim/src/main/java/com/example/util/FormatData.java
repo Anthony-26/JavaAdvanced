@@ -8925,4 +8925,27 @@ public class FormatData {
         return null;
     }
 
+    public static TreeMap<LocalDate, BigDecimal> getEMA(String data) {
+        try {
+            TreeMap<LocalDate, BigDecimal> EMAs = new TreeMap<>();
+
+            JsonNode jsonData = objectMapper.readTree(data);
+            JsonNode JsonEMAs = jsonData.get("Technical Analysis: EMA");
+
+            JsonEMAs.fields().forEachRemaining(EMA -> {
+                BigDecimal EMAValue = new BigDecimal(EMA.getValue().asText());
+                LocalDate date = LocalDate.parse(EMA.getKey(), dateTimeFormatter);
+
+                EMAs.put(date, EMAValue);
+            });
+
+            return EMAs;
+
+        } catch (JsonProcessingException e) {
+
+        }
+
+        return null;
+    }
+
 }
