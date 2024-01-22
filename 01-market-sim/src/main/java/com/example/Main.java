@@ -1,10 +1,8 @@
 package com.example;
 
-import com.ctc.wstx.shaded.msv_core.datatype.xsd.datetime.BigDateTimeValueType;
 import com.example.api.AlphaVantageClient;
 import com.example.model.Fractal;
 import com.example.model.PricesTimeSerie;
-import com.example.service.StockDataManager;
 import com.example.util.Actions;
 import com.example.util.FormatData;
 
@@ -50,7 +48,9 @@ public class Main {
             
             switch (command) {
                 case "6":
-                    String ema = client.getEMA("IBM", "weekly", 9);
+                    System.out.print("Enter weekly ema period:");
+                    int tp = Integer.parseInt(scanner.nextLine());
+                    String ema = client.getEMA("IBM", "weekly", tp);
                     TreeMap<LocalDate, BigDecimal> EmaArray = FormatData.getEMA(ema);
                     System.out.println(EmaArray);
 
