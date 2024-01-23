@@ -8933,7 +8933,7 @@ public class FormatData {
             JsonNode JsonEMAs = jsonData.get("Technical Analysis: EMA");
 
             JsonEMAs.fields().forEachRemaining(EMA -> {
-                BigDecimal EMAValue = new BigDecimal(EMA.getValue().asText());
+                BigDecimal EMAValue = new BigDecimal(EMA.getValue().get("EMA").asText());
                 LocalDate date = LocalDate.parse(EMA.getKey(), dateTimeFormatter);
 
                 EMAs.put(date, EMAValue);
@@ -8944,8 +8944,6 @@ public class FormatData {
         } catch (JsonProcessingException e) {
 
         }
-
         return null;
     }
-
 }
