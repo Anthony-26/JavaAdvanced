@@ -162,35 +162,38 @@ public class Actions {
         return fractals;
     }
 
-    public static TreeMap<LocalDate, BigDecimalEmaCrossValues> EmaAnalysis(TreeMap<LocalDate, BigDecimal> mapFirstEma, TreeMap<LocalDate, BigDecimal> mapSecondEma){
-        
+    public static TreeMap<LocalDate, BigDecimalEmaCrossValues> EmaAnalysis(TreeMap<LocalDate, BigDecimal> mapLowerPeriodEma, TreeMap<LocalDate, BigDecimal> mapHigherPeriodEma){
+        LocalDate startingDate = mapHigherPeriodEma.firstKey();
+        TreeMap<LocalDate, BigDecimal> synchronizedMapLowerPeriodEma = new TreeMap<>(mapLowerPeriodEma.tailMap(startingDate));
+
+        System.out.println(startingDate + " " + synchronizedMapLowerPeriodEma);
         
         return null;
     }
 }
 
 class BigDecimalEmaCrossValues{
-    private BigDecimal firstEma;
-    private BigDecimal secondEma;
+    private BigDecimal lowerPeriodEma;
+    private BigDecimal higherPeriodEma;
 
-    BigDecimalEmaCrossValues(BigDecimal firstEma, BigDecimal secondEma){
-        this.firstEma = firstEma;
-        this.secondEma = secondEma;
+    BigDecimalEmaCrossValues(BigDecimal lowerPeriodEma, BigDecimal higherPeriodEma){
+        this.lowerPeriodEma = lowerPeriodEma;
+        this.higherPeriodEma = higherPeriodEma;
     }
 
-    public BigDecimal getFirstEma(){
-        return this.firstEma;
+    public BigDecimal getLowerPeriodEma(){
+        return this.lowerPeriodEma;
     }
 
-    public void setFirstEma(BigDecimal firstEma){
-        this.firstEma = firstEma;
+    public void setLowerPeriodEma(BigDecimal lowerPeriodEma){
+        this.lowerPeriodEma = lowerPeriodEma;
     }
 
-    public BigDecimal getSecondEma(){
-        return this.secondEma;
+    public BigDecimal getHigherPeriodEma(){
+        return this.higherPeriodEma;
     }
 
-    public void setSecondEma(BigDecimal secondEma){
-        this.secondEma = secondEma;
+    public void setHigherPeriodEma(BigDecimal higherPeriodEma){
+        this.higherPeriodEma = higherPeriodEma;
     }
 }
