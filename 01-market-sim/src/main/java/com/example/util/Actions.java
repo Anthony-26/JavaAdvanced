@@ -162,4 +162,35 @@ public class Actions {
         return fractals;
     }
 
+    public static TreeMap<LocalDate, BigDecimalEmaCrossValues> EmaAnalysis(TreeMap<LocalDate, BigDecimal> mapFirstEma, TreeMap<LocalDate, BigDecimal> mapSecondEma){
+        
+        
+        return null;
+    }
+}
+
+class BigDecimalEmaCrossValues{
+    private BigDecimal firstEma;
+    private BigDecimal secondEma;
+
+    BigDecimalEmaCrossValues(BigDecimal firstEma, BigDecimal secondEma){
+        this.firstEma = firstEma;
+        this.secondEma = secondEma;
+    }
+
+    public BigDecimal getFirstEma(){
+        return this.firstEma;
+    }
+
+    public void setFirstEma(BigDecimal firstEma){
+        this.firstEma = firstEma;
+    }
+
+    public BigDecimal getSecondEma(){
+        return this.secondEma;
+    }
+
+    public void setSecondEma(BigDecimal secondEma){
+        this.secondEma = secondEma;
+    }
 }
