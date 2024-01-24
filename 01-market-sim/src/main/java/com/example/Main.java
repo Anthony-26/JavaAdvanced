@@ -48,11 +48,18 @@ public class Main {
             
             switch (command) {
                 case "6":
-                    System.out.print("Enter weekly ema period:");
-                    int tp = Integer.parseInt(scanner.nextLine());
-                    String ema = client.getEMA("IBM", "weekly", tp);
-                    TreeMap<LocalDate, BigDecimal> EmaArray = FormatData.getEMA(ema);
-                    System.out.println(EmaArray);
+                    // System.out.print("Enter weekly ema period:");
+                    // int tp = Integer.parseInt(scanner.nextLine());
+
+                    String ema9 = client.getEMA("IBM", "weekly", 9);
+                    String ema18 = client.getEMA("IBM", "weekly", 18);
+
+                    TreeMap<LocalDate, BigDecimal> EmaArray9 = FormatData.getEMA(ema9);
+                    TreeMap<LocalDate, BigDecimal> EmaArray18 = FormatData.getEMA(ema18);
+
+                    Actions.EmaAnalysis(EmaArray9, EmaArray18);
+
+                    // System.out.println(EmaArray);
 
 
                 case "5":
