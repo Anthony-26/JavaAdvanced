@@ -59,9 +59,6 @@ public class Main {
 
                     Actions.EmaAnalysis(EmaArray9, EmaArray18);
 
-                    // System.out.println(EmaArray);
-
-
                 case "5":
                     String wd = client.getSeries("IBM", "weekly");
 
