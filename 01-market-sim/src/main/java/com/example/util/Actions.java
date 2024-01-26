@@ -167,6 +167,8 @@ public class Actions {
         TreeMap<LocalDate, BigDecimal> synchronizedMapLowerPeriodEma = new TreeMap<>(mapLowerPeriodEma.tailMap(startingDate));
 
         System.out.println(startingDate + " " + synchronizedMapLowerPeriodEma);
+
+        /* Looping in the maps & return values at same date */
         
         return null;
     }
