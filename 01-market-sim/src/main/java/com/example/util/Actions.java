@@ -169,6 +169,8 @@ public class Actions {
         System.out.println(startingDate + " " + synchronizedMapLowerPeriodEma);
 
         /* Looping in the maps & return values at same date */
+
+        /* Incorrect values of EMA using AlphaVantageAPI - Stuck on this entire project */
         
         return null;
     }
