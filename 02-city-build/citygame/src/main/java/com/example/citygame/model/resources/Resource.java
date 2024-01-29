@@ -1,4 +1,4 @@
-package com.example.citygame.model;
+package com.example.citygame.model.resources;
 
 public abstract class Resource {
 
@@ -7,7 +7,7 @@ public abstract class Resource {
     private int productionRate;
     private int consumptionRate;
 
-    Resource(String name) {
+    protected Resource(String name) {
         this.name = name;
         this.quantity = 0;
         this.productionRate = 0;
@@ -42,12 +42,24 @@ public abstract class Resource {
         this.productionRate += rate;
     }
 
+    public void decreaseProductionRate(int rate){
+        this.productionRate -= rate;
+    }
+
     public int getConsumptionRate() {
         return this.consumptionRate;
     }
 
     public void setConsumptionRate(int consumptionRate) {
         this.consumptionRate = consumptionRate;
+    }
+
+    public void increaseConsumptionRate(int rate){
+        this.consumptionRate += rate;
+    }
+
+    public void decreaseConsumptionRate(int rate){
+        this.consumptionRate -= rate;
     }
 
     public void addQuantity(int amount) {

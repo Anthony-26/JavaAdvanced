@@ -1,4 +1,4 @@
-package com.example.citygame.model;
+package com.example.citygame.model.citizens;
 
 public enum CitizenType {
     FARMER,
