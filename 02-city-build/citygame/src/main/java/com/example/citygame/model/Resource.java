@@ -30,11 +30,31 @@ public abstract class Resource {
         this.quantity = quantity;
     }
 
-    public void addQuantity(int amount){
+    public int getProductionRate() {
+        return this.productionRate;
+    }
+
+    public void setProductionRate(int productionRate) {
+        this.productionRate = productionRate;
+    }
+
+    public void increaseProductionRate(int rate){
+        this.productionRate += rate;
+    }
+
+    public int getConsumptionRate() {
+        return this.consumptionRate;
+    }
+
+    public void setConsumptionRate(int consumptionRate) {
+        this.consumptionRate = consumptionRate;
+    }
+
+    public void addQuantity(int amount) {
         this.quantity += amount;
     }
 
-    public void consumeQuantity(int amount){
+    public void consumeQuantity(int amount) {
         this.quantity -= amount;
     }
 

@@ -7,6 +7,10 @@ public class FishingHut extends ProductionBuilding{
     FishingHut(String name, Citizen workforceType, int workforce, int cost, Resource fish){
         super(name, workforceType, workforce, cost);
         this.fish = fish;
+
+        fish.increaseProductionRate(1);
     }
+
+
 
 }
