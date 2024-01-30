@@ -1,13 +1,15 @@
 package com.example.citygame.model.resources;
 
-public abstract class Resource {
+public class Resource {
 
     private String name;
     private double quantity;
     private double productionRate;
     private double consumptionRate;
 
-    protected Resource(String name) {
+    public static final Resource FISH = new Resource("Fish");
+
+    private Resource(String name) {
         this.name = name;
         this.quantity = 0;
         this.productionRate = 0;
@@ -38,11 +40,11 @@ public abstract class Resource {
         this.productionRate = productionRate;
     }
 
-    public void increaseProductionRate(double rate){
+    public void increaseProductionRate(double rate) {
         this.productionRate += rate;
     }
 
-    public void decreaseProductionRate(double rate){
+    public void decreaseProductionRate(double rate) {
         this.productionRate -= rate;
     }
 
@@ -54,11 +56,11 @@ public abstract class Resource {
         this.consumptionRate = consumptionRate;
     }
 
-    public void increaseConsumptionRate(double rate){
+    public void increaseConsumptionRate(double rate) {
         this.consumptionRate += rate;
     }
 
-    public void decreaseConsumptionRate(double rate){
+    public void decreaseConsumptionRate(double rate) {
         this.consumptionRate -= rate;
     }
 

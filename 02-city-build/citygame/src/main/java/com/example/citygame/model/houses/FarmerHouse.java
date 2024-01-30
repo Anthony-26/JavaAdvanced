@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.example.citygame.model.resources.Fish;
+import com.example.citygame.model.resources.Resource;
 
 public class FarmerHouse extends House {
     
@@ -15,11 +15,9 @@ public class FarmerHouse extends House {
         resourceNeeds = Collections.unmodifiableMap(aMap);
     }
 
-
-    public FarmerHouse(Fish fish){
-        super("Farmer House", 10, 0);
-
-        fish.increaseConsumptionRate(0.05d);
+    public FarmerHouse(){
+        super("Farmer House", 10, 1);
+        Resource.FISH.increaseConsumptionRate(0.05d);
     }
 
 }
