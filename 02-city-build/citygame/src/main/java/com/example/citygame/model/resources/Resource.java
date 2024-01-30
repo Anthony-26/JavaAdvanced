@@ -3,9 +3,9 @@ package com.example.citygame.model.resources;
 public abstract class Resource {
 
     private String name;
-    private int quantity;
-    private int productionRate;
-    private int consumptionRate;
+    private double quantity;
+    private double productionRate;
+    private double consumptionRate;
 
     protected Resource(String name) {
         this.name = name;
@@ -22,51 +22,51 @@ public abstract class Resource {
         this.name = name;
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return this.quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 
-    public int getProductionRate() {
+    public double getProductionRate() {
         return this.productionRate;
     }
 
-    public void setProductionRate(int productionRate) {
+    public void setProductionRate(double productionRate) {
         this.productionRate = productionRate;
     }
 
-    public void increaseProductionRate(int rate){
+    public void increaseProductionRate(double rate){
         this.productionRate += rate;
     }
 
-    public void decreaseProductionRate(int rate){
+    public void decreaseProductionRate(double rate){
         this.productionRate -= rate;
     }
 
-    public int getConsumptionRate() {
+    public double getConsumptionRate() {
         return this.consumptionRate;
     }
 
-    public void setConsumptionRate(int consumptionRate) {
+    public void setConsumptionRate(double consumptionRate) {
         this.consumptionRate = consumptionRate;
     }
 
-    public void increaseConsumptionRate(int rate){
+    public void increaseConsumptionRate(double rate){
         this.consumptionRate += rate;
     }
 
-    public void decreaseConsumptionRate(int rate){
+    public void decreaseConsumptionRate(double rate){
         this.consumptionRate -= rate;
     }
 
-    public void addQuantity(int amount) {
+    public void addQuantity(double amount) {
         this.quantity += amount;
     }
 
-    public void consumeQuantity(int amount) {
+    public void consumeQuantity(double amount) {
         this.quantity -= amount;
     }
 
