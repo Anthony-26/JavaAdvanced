@@ -10,7 +10,7 @@ public abstract class House extends Building {
 
     private int maxCapacity;
     private int currentOccupants;
-    private Map<Resource, Integer> resourceNeeds;
+    private Map<Resource, Double> resourceNeeds;
 
     public House(String name, int maxCapacity, int currentOccupants){
         super(name);
@@ -18,7 +18,6 @@ public abstract class House extends Building {
         this.currentOccupants = currentOccupants;
         this.resourceNeeds = new HashMap<>();
     }
-
 
     public int getMaxCapacity() {
         return this.maxCapacity;
@@ -28,7 +27,17 @@ public abstract class House extends Building {
         return this.currentOccupants;
     }
 
-    public Map<Resource,Integer> getResourceNeeds() {
+    public void addOneOccupant(){
+        if (currentOccupants < maxCapacity)
+            this.currentOccupants += 1;
+    }
+
+    public void removeOneOccupant(){
+        if(currentOccupants > 0)
+            this.currentOccupants -= 1;
+    }
+
+    public Map<Resource, Double> getResourceNeeds() {
         return this.resourceNeeds;
     }
 
