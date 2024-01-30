@@ -6,30 +6,36 @@ import java.util.Map;
 
 public class Workforce {
     
-    private int totalPopulation;
+    public static final Workforce INSTANCE = new Workforce();
+
+    private int totalWorkforce;
     private Map<WorkforceType, Integer> workforceList;
     
-    public Workforce(){
-        this.totalPopulation = 0;
+    private Workforce(){
+        this.totalWorkforce = 0;
 
         this.workforceList = new HashMap<>();
         this.workforceList.put(WorkforceType.FARMER, 0);
     }
 
-    public int getTotalPopulation(){
-        return totalPopulation;
+    public int getTotalWorkforce(){
+        return totalWorkforce;
     }
 
     public Map<WorkforceType, Integer> getWorkforceList(){
         return Collections.unmodifiableMap(this.workforceList);
     }
 
-    public void increaseTotalPopulationByOne(){
-        totalPopulation += 1;
+    public void increaseTotalWorkforceByOne(){
+        totalWorkforce += 1;
     }
 
-    public void decreaseTotalPopulationByOne(){
-        totalPopulation -= 1;
+    public void decreaseTotalWorkforceByOne(){
+        totalWorkforce -= 1;
+    }
+
+    public void decreaseWorkforce(WorkforceType type, int workforce){
+        this.workforceList.compute(type, (key, oldValue) -> oldValue - workforce);
     }
 
     public int getFarmerWorkforce() {
@@ -37,14 +43,14 @@ public class Workforce {
     }
 
     public void addOneFarmerWorkforce() {
-        this.getWorkforceList().merge(WorkforceType.FARMER, 1, Integer::sum);
-        this.increaseTotalPopulationByOne();
+        this.workforceList.compute(WorkforceType.FARMER, (key, oldValue) -> oldValue++);
+        this.increaseTotalWorkforceByOne();
     }
 
     public void removeOneFarmerWorkforce() {
         if (this.getWorkforceList().get(WorkforceType.FARMER) > 0) {
-            this.getWorkforceList().merge(WorkforceType.FARMER, 0, (oldValue, value) -> oldValue--);
-            this.decreaseTotalPopulationByOne();
+            this.workforceList.compute(WorkforceType.FARMER, (key, oldValue) -> oldValue--);
+            this.decreaseTotalWorkforceByOne();
         }
     }
 }
