@@ -1,19 +1,23 @@
 package com.example.citygame.model.productionbuildings;
 
+import java.util.Map;
+
 import com.example.citygame.model.Building;
-import com.example.citygame.model.citizens.Citizen;
+import com.example.citygame.model.resources.Resource;
+import com.example.citygame.model.workforce.WorkforceType;
 
 public abstract class ProductionBuilding extends Building{ 
 
-    private Citizen workforceType;
+    private WorkforceType workforceType;
     private int workforce;
-    private int cost;
+    private int maintenanceCost;
+    private Map<Resource, Integer> constructionCost;
 
-    protected ProductionBuilding(String name, Citizen workforceType, int workforce, int cost){
+    protected ProductionBuilding(String name, WorkforceType workforceType, int workforce, int maintenanceCost){
         super(name);
         this.workforceType = workforceType;
         this.workforce = workforce;
-        this.cost = cost;
+        this.maintenanceCost = maintenanceCost;
     }
 
 }
