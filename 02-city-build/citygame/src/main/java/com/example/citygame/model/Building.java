@@ -16,4 +16,8 @@ public abstract class Building {
         this.name = name;
     }
 
+    public int getId(){
+        return this.id;
+    }
+
 }
