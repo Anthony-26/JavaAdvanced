@@ -32,9 +32,9 @@ public class CitygameApplication implements CommandLineRunner {
 
 		ArrayList<FarmerHouse> farmerHouseList = new ArrayList<>();
 
-		FarmerHouse fh = new FarmerHouse();
-		farmerHouseList.add(fh);
-		Fishery fih = new Fishery();
+		// FarmerHouse fh = new FarmerHouse();
+		// farmerHouseList.add(fh);
+		// Fishery fih = new Fishery();
 
 		Scanner s = new Scanner(System.in);
 
@@ -51,8 +51,8 @@ public class CitygameApplication implements CommandLineRunner {
 			switch (command) {
 				case "1":
 
-					fh = new FarmerHouse();
-					farmerHouseList.add(fh);
+					// fh = new FarmerHouse();
+					// farmerHouseList.add(fh);
 
 					break;
 			

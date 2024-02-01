@@ -6,5 +6,4 @@ public interface BalanceService {
     void substractToBalance(int amount);
     void addRevenuePerMinute(int amount);   
     void addExpensePerMinute(int amount);   
-    
 }

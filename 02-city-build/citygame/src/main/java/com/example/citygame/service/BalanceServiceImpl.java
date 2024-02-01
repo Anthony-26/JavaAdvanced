@@ -4,21 +4,36 @@ import org.springframework.stereotype.Service;
 
 import com.example.citygame.model.economy.Balance;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class BalanceServiceImpl implements BalanceService {
+
+    private final Balance balance;
 
     @Override
     public int getCurrentBalance() {
-        return Balance.INSTANCE.getCurrentBalance();
+        return balance.getCurrentBalance();
     }
 
     @Override
     public void addToBalance(int amount) {
-        Balance.INSTANCE.addToBalance(amount);
+        balance.addToBalance(amount);
     }
 
     @Override
     public void substractToBalance(int amount) {
-        Balance.INSTANCE.substractToBalance(amount);
+        balance.substractToBalance(amount);
+    }
+
+    @Override
+    public void addRevenuePerMinute(int amount) {
+        balance.addRevenuePerMinute(amount);
+    }
+
+    @Override
+    public void addExpensePerMinute(int amount) {
+        balance.addExpensePerMinute(amount);
     }
 }

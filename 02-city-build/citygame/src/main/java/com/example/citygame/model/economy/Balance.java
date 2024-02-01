@@ -9,7 +9,7 @@ public class Balance {
     private int revenuesPerMinute;
     private int expensesPerMinute;
 
-    public Balance(int initialFunds) {
+    public Balance() {
         this.currentBalance = 75000;
         this.revenuesPerMinute = 0;
         this.expensesPerMinute = 0;

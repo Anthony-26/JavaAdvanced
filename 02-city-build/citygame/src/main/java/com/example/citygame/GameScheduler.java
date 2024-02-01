@@ -11,7 +11,7 @@ public class GameScheduler {
     @Scheduled(fixedRate = 10000) 
     public void updateGame() {
 
-        Balance.INSTANCE.updateBalance();
+        // Balance.INSTANCE.updateBalance();
 
     }
 }
