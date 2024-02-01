@@ -5,15 +5,20 @@ import com.example.citygame.model.resources.Resource;
 import com.example.citygame.model.workforce.Workforce;
 import com.example.citygame.model.workforce.WorkforceType;
 
-public class Fishery extends ProductionBuilding{
+public class Fishery extends ProductionBuilding {
 
-    public Fishery(){
+    private Balance balance;
+
+    public Fishery(Balance balance) {
         super("Fishery", WorkforceType.FARMER, 25, 40);
+        this.balance = balance;
+    }
 
+    public void init() {
         Resource.FISH.increaseProductionRate(2d);
         Workforce.INSTANCE.decreaseWorkforce(WorkforceType.FARMER, 20);
-        Balance.INSTANCE.addExpensePerMinute(40);
-        Balance.INSTANCE.substractToBalance(100);
+        balance.addExpensePerMinute(40);
+        balance.substractToBalance(100);
     }
 
 }

@@ -2,8 +2,9 @@ package com.example.citygame.service;
 
 public interface BalanceService {
     int getCurrentBalance();
-    void addFunds(int amount);
-    void deductFunds(int amount);
+    void addToBalance(int amount);
+    void substractToBalance(int amount);
+    void addRevenuePerMinute(int amount);   
+    void addExpensePerMinute(int amount);   
     
 }
-

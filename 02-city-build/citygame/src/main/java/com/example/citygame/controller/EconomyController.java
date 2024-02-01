@@ -2,7 +2,7 @@ package com.example.citygame.controller;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.example.citygame.service.BalanceService;
+import com.example.citygame.model.economy.Balance;
 
 import lombok.RequiredArgsConstructor;
 

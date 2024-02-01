@@ -1,15 +1,16 @@
 package com.example.citygame.model.economy;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Balance {
 
     private int currentBalance;
     private int revenuesPerMinute;
     private int expensesPerMinute;
 
-    public static final Balance INSTANCE = new Balance(75000);
-
-    private Balance(int initialFunds) {
-        this.currentBalance = initialFunds;
+    public Balance(int initialFunds) {
+        this.currentBalance = 75000;
         this.revenuesPerMinute = 0;
         this.expensesPerMinute = 0;
     }

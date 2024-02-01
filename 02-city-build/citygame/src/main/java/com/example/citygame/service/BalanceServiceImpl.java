@@ -2,22 +2,23 @@ package com.example.citygame.service;
 
 import org.springframework.stereotype.Service;
 
+import com.example.citygame.model.economy.Balance;
+
 @Service
 public class BalanceServiceImpl implements BalanceService {
-    private int balance = 0;
 
     @Override
     public int getCurrentBalance() {
-        return balance;
+        return Balance.INSTANCE.getCurrentBalance();
     }
 
     @Override
-    public void addFunds(int amount) {
-        balance += amount;
+    public void addToBalance(int amount) {
+        Balance.INSTANCE.addToBalance(amount);
     }
 
     @Override
-    public void deductFunds(int amount) {
-        balance -= amount;
+    public void substractToBalance(int amount) {
+        Balance.INSTANCE.substractToBalance(amount);
     }
 }
