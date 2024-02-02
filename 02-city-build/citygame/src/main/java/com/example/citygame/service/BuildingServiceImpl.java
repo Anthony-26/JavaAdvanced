@@ -1,5 +1,8 @@
 package com.example.citygame.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.example.citygame.model.economy.Balance;
@@ -13,13 +16,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BuildingServiceImpl implements BuildingService {
     
+    private final List<Fishery> fisheryList = new ArrayList<>();
     private final Balance balance;
     private final Workforce workforce;
     private final Resource resource;
 
     @Override
     public void createFishery(){
-        Fishery f = new Fishery(balance, workforce, resource);
-        System.out.println(f);
+        Fishery fishery = new Fishery(balance, workforce, resource);
+        fisheryList.add(fishery);
+        System.out.println(fishery);
     }
 }

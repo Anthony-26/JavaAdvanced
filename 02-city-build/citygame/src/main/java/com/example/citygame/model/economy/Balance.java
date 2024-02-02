@@ -29,7 +29,6 @@ public class Balance {
 
     public void updateBalance() {
         this.currentBalance += revenuesPerMinute - expensesPerMinute;
-        System.out.println(this.currentBalance);
     }
 
     public void addRevenuePerMinute(int amount) {

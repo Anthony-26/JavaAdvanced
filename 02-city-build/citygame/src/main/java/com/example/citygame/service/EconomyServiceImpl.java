@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class BalanceServiceImpl implements BalanceService {
+public class EconomyServiceImpl implements EconomyService {
 
     private final Balance balance;
 

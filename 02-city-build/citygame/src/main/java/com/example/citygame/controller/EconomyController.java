@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.citygame.service.BalanceService;
+import com.example.citygame.service.EconomyService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -13,11 +13,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EconomyController {
 
-    private final BalanceService balanceService;
+    private final EconomyService economyService;
 
     @GetMapping("/balance")
     public ResponseEntity<Integer> getCurrentBalance() {
-        int currentBalance = balanceService.getCurrentBalance();
+        int currentBalance = economyService.getCurrentBalance();
         return new ResponseEntity<>(currentBalance, HttpStatus.OK);
     }
 
