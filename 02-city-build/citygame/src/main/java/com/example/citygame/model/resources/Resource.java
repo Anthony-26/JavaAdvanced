@@ -10,7 +10,7 @@ public class Resource {
 
     public static final Resource FISH = new Resource("Fish");
 
-    private Resource(String name) {
+    public Resource(String name) {
         this.name = name;
         this.quantity = 0;
         this.productionRate = 0;

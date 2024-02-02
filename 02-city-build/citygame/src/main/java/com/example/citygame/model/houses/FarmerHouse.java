@@ -11,6 +11,8 @@ import com.example.citygame.model.workforce.Workforce;
 public class FarmerHouse extends House {
 
     private Balance balance;
+    private Workforce workforce;
+    private Resource fish;
     
     public static final Map<String, Double> resourceNeeds;
     static {
@@ -19,12 +21,15 @@ public class FarmerHouse extends House {
         resourceNeeds = Collections.unmodifiableMap(aMap);
     }
 
-    public FarmerHouse(Balance balance){
+    public FarmerHouse(Balance balance, Workforce workforce, Resource fish){
         super("Farmer House", 10, 1);
         this.balance = balance;
-        Workforce.INSTANCE.addOneFarmerWorkforce();
-        Resource.FISH.increaseConsumptionRate(0.05d);
-        // Balance.INSTANCE.addRevenuePerMinute(super.getCurrentOccupants() * 5);
+        this.workforce = workforce;
+        this.fish = fish;
+
+        workforce.addOneFarmerWorkforce();
+        fish.increaseConsumptionRate(0.05d);
+        balance.addRevenuePerMinute(super.getCurrentOccupants() * 5);
     }
 
 }
