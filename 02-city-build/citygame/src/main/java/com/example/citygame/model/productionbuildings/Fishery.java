@@ -9,19 +9,17 @@ public class Fishery extends ProductionBuilding {
 
     private Balance balance;
     private Workforce workforce;
+    private Resource fish;
 
-    public Fishery(Balance balance, Workforce workforce) {
+    public Fishery(Balance balance, Workforce workforce, Resource fish) {
         super("Fishery", WorkforceType.FARMER, 25, 40);
         this.balance = balance;
         this.workforce = workforce;
+        this.fish = fish;
 
         workforce.decreaseWorkforce(WorkforceType.FARMER, 20);
         balance.addExpensePerMinute(40);
         balance.substractToBalance(100);
+        fish.increaseProductionRate(2d);
     }
-
-    public void init() {
-        Resource.FISH.increaseProductionRate(2d);
-    }
-
 }
