@@ -4,9 +4,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Workforce {
-    
-    public static final Workforce INSTANCE = new Workforce();
 
     private int totalWorkforce;
     private Map<WorkforceType, Integer> workforceList;

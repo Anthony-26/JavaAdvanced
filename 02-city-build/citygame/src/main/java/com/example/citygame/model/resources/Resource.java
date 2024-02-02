@@ -1,5 +1,6 @@
 package com.example.citygame.model.resources;
 
+
 public class Resource {
 
     private String name;
