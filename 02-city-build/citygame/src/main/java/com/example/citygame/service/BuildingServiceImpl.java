@@ -18,24 +18,29 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class BuildingServiceImpl implements BuildingService {
-    
+
     private final Map<Class<? extends ProductionBuilding>, List<ProductionBuilding>> buildingsMap = new HashMap<>();
     private final Balance balance;
     private final Workforce workforce;
     private final Resource resource;
 
     @Override
-    public <T extends ProductionBuilding> void addBuilding(T building){
+    public <T extends ProductionBuilding> void addBuilding(T building) {
         List<ProductionBuilding> buildings = buildingsMap.computeIfAbsent(building.getClass(), k -> new ArrayList<>());
         buildings.add(building);
     }
 
     @Override
-    public <T extends ProductionBuilding> T createBuilding(Class<T> buildingType) throws ReflectiveOperationException{
+    public <T extends ProductionBuilding> T createBuilding(Class<T> buildingType) throws ReflectiveOperationException {
         Constructor<T> constructor = buildingType.getConstructor(Balance.class, Workforce.class, Resource.class);
         T building = constructor.newInstance(balance, workforce, resource);
         addBuilding(building);
         return building;
+    }
+
+    @Override
+    public <T extends ProductionBuilding> List<ProductionBuilding> getAllBuildingWithType(Class<T> buildingType) {
+            return buildingsMap.get(buildingType);
     }
 
 }
