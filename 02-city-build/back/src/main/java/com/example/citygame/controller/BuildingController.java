@@ -6,12 +6,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.citygame.model.Building;
 import com.example.citygame.model.productionbuildings.ProductionBuilding;
 import com.example.citygame.service.BuildingService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -37,6 +41,18 @@ public class BuildingController {
         List<ProductionBuilding> buildingList = buildingService.getAllBuildingWithType(buildingClass);
         return new ResponseEntity<>(String.valueOf(buildingList.get(0).getWorkforce()), HttpStatus.OK) ;
     }
+
+    @GetMapping("/test")
+    public ResponseEntity<HttpStatus> testFunction() {
+        buildingService.testingMethod();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/void")
+    public void voidEndpoint() {
+        buildingService.voidEndpoint();
+    }
+    
     
 
 }

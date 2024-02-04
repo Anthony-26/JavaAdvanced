@@ -20,4 +20,10 @@ public class ResourceManager {
         return this.resourcesMap.get(name);
     }
 
+    public void updateResource(){
+        resourcesMap.forEach((name, resource) -> {
+            resource.setQuantity(resource.getQuantity() + resource.getProductionRate() - resource.getConsumptionRate());
+        });
+    }
+
 }

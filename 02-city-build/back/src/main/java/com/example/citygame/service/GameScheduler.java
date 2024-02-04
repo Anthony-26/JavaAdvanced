@@ -4,6 +4,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.example.citygame.managers.FarmerHouseManager;
+import com.example.citygame.managers.ResourceManager;
 import com.example.citygame.model.economy.Balance;
 
 import lombok.RequiredArgsConstructor;
@@ -14,12 +15,14 @@ public class GameScheduler {
 
     private final Balance balance;
     private final FarmerHouseManager farmerHouseManager;
+    private final ResourceManager resourceManager;
 
     @Scheduled(fixedRate = 30000)
     public void updateGame() {
 
         balance.updateBalance();
         farmerHouseManager.updateOccupants();
+        resourceManager.updateResource();
 
     }
 }

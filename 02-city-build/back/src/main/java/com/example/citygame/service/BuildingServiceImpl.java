@@ -8,11 +8,11 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.example.citygame.managers.FarmerHouseManager;
 import com.example.citygame.managers.ResourceManager;
 import com.example.citygame.model.economy.Balance;
 import com.example.citygame.model.houses.FarmerHouse;
 import com.example.citygame.model.productionbuildings.ProductionBuilding;
-import com.example.citygame.model.resources.Resource;
 import com.example.citygame.model.workforce.Workforce;
 
 import lombok.RequiredArgsConstructor;
@@ -25,6 +25,7 @@ public class BuildingServiceImpl implements BuildingService {
     private final Balance balance;
     private final Workforce workforce;
     private final ResourceManager resourceManager;
+    private final FarmerHouseManager farmerHouseManager;
 
     @Override
     public <T extends ProductionBuilding> void addBuilding(T building) {
@@ -43,6 +44,18 @@ public class BuildingServiceImpl implements BuildingService {
     @Override
     public <T extends ProductionBuilding> List<ProductionBuilding> getAllBuildingWithType(Class<T> buildingType) {
             return buildingsMap.get(buildingType);
+    }
+
+    @Override
+    public void testingMethod(){
+        FarmerHouse fh = new FarmerHouse(balance, workforce, resourceManager);
+        farmerHouseManager.addFarmerHouseInMap(fh);
+        farmerHouseManager.updateOccupants();
+    }
+
+    @Override
+    public void voidEndpoint(){
+        System.out.println("Void");
     }
 
 }

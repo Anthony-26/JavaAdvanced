@@ -12,4 +12,8 @@ public interface BuildingService {
 
     <T extends ProductionBuilding> List<ProductionBuilding> getAllBuildingWithType(Class<T> buildingType);
 
+    void testingMethod();
+
+    void voidEndpoint();
+
 }
