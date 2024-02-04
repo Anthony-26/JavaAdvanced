@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.example.citygame.model.economy.Balance;
+import com.example.citygame.model.houses.FarmerHouse;
 import com.example.citygame.model.productionbuildings.ProductionBuilding;
 import com.example.citygame.model.resources.Resource;
 import com.example.citygame.model.workforce.Workforce;
@@ -35,6 +36,10 @@ public class BuildingServiceImpl implements BuildingService {
         Constructor<T> constructor = buildingType.getConstructor(Balance.class, Workforce.class, Resource.class);
         T building = constructor.newInstance(balance, workforce, resource);
         addBuilding(building);
+
+        /* TESTING FARMER METHOD */
+        FarmerHouse f = new FarmerHouse(balance, workforce, resource);
+
         return building;
     }
 

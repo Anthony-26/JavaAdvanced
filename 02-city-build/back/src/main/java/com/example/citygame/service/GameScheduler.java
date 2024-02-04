@@ -12,11 +12,13 @@ import lombok.RequiredArgsConstructor;
 public class GameScheduler {
 
     private final Balance balance;
+    
 
     @Scheduled(fixedRate = 10000) 
     public void updateGame() {
 
         balance.updateBalance();
+
 
     }
 }

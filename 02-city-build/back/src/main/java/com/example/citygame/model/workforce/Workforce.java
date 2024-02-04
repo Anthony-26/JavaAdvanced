@@ -47,12 +47,12 @@ public class Workforce {
         totalWorkforce -= workforce;
     }
 
-    public void addOneWorkforce(WorkforceType type) {
+    public void increaseOneWorkforce(WorkforceType type) {
         this.workforceList.compute(type, (key, oldValue) -> oldValue++);
         this.increaseTotalWorkforceByOne();
     }
 
-    public void removeOneWorkforce(WorkforceType type) {
+    public void decreaseOneWorkforce(WorkforceType type) {
         this.workforceList.compute(type, (key, oldValue) -> oldValue--);
         this.decreaseTotalWorkforceByOne();
     }
@@ -64,6 +64,6 @@ public class Workforce {
 
     public void decreaseWorkforce(WorkforceType type, int workforce) {
         this.workforceList.compute(type, (key, oldValue) -> oldValue - workforce);
-        this.increaseTotalWorkforce(workforce);
+        this.decreaseTotalWorkforce(workforce);
     }
 }
