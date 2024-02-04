@@ -39,11 +39,11 @@ public class Workforce {
         totalWorkforce -= 1;
     }
 
-    public void increaseTotalWorkforce(int workforce) {
+    private void increaseTotalWorkforce(int workforce) {
         totalWorkforce += workforce;
     }
 
-    public void decreaseTotalWorkforce(int workforce) {
+    private void decreaseTotalWorkforce(int workforce) {
         totalWorkforce -= workforce;
     }
 

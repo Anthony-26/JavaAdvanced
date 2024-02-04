@@ -1,16 +1,16 @@
-package com.example.citygame.config;
+// package com.example.citygame.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+// import org.springframework.context.annotation.Bean;
+// import org.springframework.context.annotation.Configuration;
 
-import com.example.citygame.model.resources.Resource;
+// import com.example.citygame.model.resources.Resource;
 
-@Configuration
-public class ResourceConfig {
-    
-    @Bean
-    public Resource fish(){
-        return new Resource("Fish");
-    }
+// @Configuration
+// public class ResourceConfig {
 
-}
+//     @Bean
+//     public Resource fish() {
+//         return new Resource("Fish");
+//     }
+
+// }

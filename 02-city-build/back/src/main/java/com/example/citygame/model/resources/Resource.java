@@ -8,7 +8,7 @@ public class Resource {
     private double productionRate;
     private double consumptionRate;
 
-    public static final Resource FISH = new Resource("Fish");
+    // public static final Resource FISH = new Resource("Fish");
 
     public Resource(String name) {
         this.name = name;

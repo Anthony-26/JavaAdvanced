@@ -36,10 +36,6 @@ public class BuildingServiceImpl implements BuildingService {
         Constructor<T> constructor = buildingType.getConstructor(Balance.class, Workforce.class, Resource.class);
         T building = constructor.newInstance(balance, workforce, resource);
         addBuilding(building);
-
-        /* TESTING FARMER METHOD */
-        FarmerHouse f = new FarmerHouse(balance, workforce, resource);
-
         return building;
     }
 

@@ -35,6 +35,10 @@ public class Balance {
         this.revenuesPerMinute += amount;
     }
 
+    public void substractRevenuePerMinute(int amount) {
+        this.revenuesPerMinute -= amount;
+    }
+
     public void addExpensePerMinute(int amount) {
         this.expensesPerMinute += amount;
     }
