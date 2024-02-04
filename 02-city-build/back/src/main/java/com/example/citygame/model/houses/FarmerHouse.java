@@ -26,15 +26,13 @@ public class FarmerHouse extends House {
 
         this.resourceFill.put("Fish", 0.0d);
 
-        workforce.increaseWorkforce(WorkforceType.FARMER, 2);
-        resourceManager.getResource("Fish").increaseConsumptionRate(0.05d);
-        balance.addRevenuePerMinute(super.getCurrentOccupants() * 5);
+        this.workforce.increaseWorkforce(WorkforceType.FARMER, 2);
+        this.resourceManager.getResource("Fish").increaseConsumptionRate(0.05d);
+        this.balance.addRevenuePerMinute(super.getCurrentOccupants() * 5);
     }
 
-    public void updatePeople() {
-
+    public void updateOccupants() {
         resourceNeeds.forEach((resourceName, need) -> {
-
             Double currentFill = resourceFill.get(resourceName);
             Resource resource = resourceManager.getResource(resourceName);
 
@@ -50,7 +48,6 @@ public class FarmerHouse extends House {
                 balance.substractRevenuePerMinute(10);
                 ;
             }
-
         });
     }
 
