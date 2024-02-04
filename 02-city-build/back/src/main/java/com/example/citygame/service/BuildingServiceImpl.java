@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.example.citygame.managers.ResourceManager;
 import com.example.citygame.model.economy.Balance;
 import com.example.citygame.model.houses.FarmerHouse;
 import com.example.citygame.model.productionbuildings.ProductionBuilding;
@@ -23,7 +24,7 @@ public class BuildingServiceImpl implements BuildingService {
     private final Map<Class<? extends ProductionBuilding>, List<ProductionBuilding>> buildingsMap = new HashMap<>();
     private final Balance balance;
     private final Workforce workforce;
-    private final Resource resource;
+    private final ResourceManager resourceManager;
 
     @Override
     public <T extends ProductionBuilding> void addBuilding(T building) {
@@ -33,8 +34,8 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     public <T extends ProductionBuilding> T createBuilding(Class<T> buildingType) throws ReflectiveOperationException {
-        Constructor<T> constructor = buildingType.getConstructor(Balance.class, Workforce.class, Resource.class);
-        T building = constructor.newInstance(balance, workforce, resource);
+        Constructor<T> constructor = buildingType.getConstructor(Balance.class, Workforce.class, ResourceManager.class);
+        T building = constructor.newInstance(balance, workforce, resourceManager);
         addBuilding(building);
         return building;
     }

@@ -1,14 +1,11 @@
 package com.example.citygame.model.resources;
 
-
 public class Resource {
 
     private String name;
     private double quantity;
     private double productionRate;
     private double consumptionRate;
-
-    // public static final Resource FISH = new Resource("Fish");
 
     public Resource(String name) {
         this.name = name;

@@ -1,5 +1,6 @@
 package com.example.citygame.model.productionbuildings;
 
+import com.example.citygame.managers.ResourceManager;
 import com.example.citygame.model.economy.Balance;
 import com.example.citygame.model.resources.Resource;
 import com.example.citygame.model.workforce.Workforce;
@@ -11,11 +12,11 @@ public class Fishery extends ProductionBuilding {
     private Workforce workforce;
     private Resource fish;
 
-    public Fishery(Balance balance, Workforce workforce, Resource fish) {
+    public Fishery(Balance balance, Workforce workforce, ResourceManager resourceManager) {
         super("Fishery", WorkforceType.FARMER, 25, 40);
         this.balance = balance;
         this.workforce = workforce;
-        this.fish = fish;
+        this.fish = resourceManager.getResource("Fish");
 
         workforce.decreaseWorkforce(WorkforceType.FARMER, 20);
         balance.addExpensePerMinute(40);
