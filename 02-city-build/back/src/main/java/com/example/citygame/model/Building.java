@@ -6,7 +6,7 @@ import com.example.citygame.model.resources.Resource;
 
 public abstract class Building {
 
-    private static int idCounter = 0;
+    public static int idCounter = 0;
     private int id;
     private String name;
     private Map<Resource, Integer> constructionCost;

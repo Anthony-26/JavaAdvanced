@@ -50,12 +50,14 @@ public class FarmerHouseManager {
 
         });
 
-        System.out.println("Length of farmerHouseMap : " + farmerHouseMap.size());
-
     }
 
-    public void addFarmerHouseInMap(FarmerHouse farmerHouse){
+    public void addFarmerHouseInMap(FarmerHouse farmerHouse) {
         this.farmerHouseMap.put(farmerHouse.getId(), farmerHouse);
+    }
+
+    public int mapSize() {
+        return this.farmerHouseMap.size();
     }
 
 }

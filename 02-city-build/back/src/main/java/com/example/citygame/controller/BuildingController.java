@@ -34,13 +34,13 @@ public class BuildingController {
         return new ResponseEntity<>(newBuilding, HttpStatus.OK);
     }
     
-    @GetMapping("/get")
-    public ResponseEntity<String> getMethodName(@RequestParam String buildingType) throws ReflectiveOperationException  {
-        String fullyQualifiedName = "com.example.citygame.model.productionbuildings.";
-        Class<? extends ProductionBuilding> buildingClass = (Class<? extends ProductionBuilding>) Class.forName(fullyQualifiedName + buildingType);
-        List<ProductionBuilding> buildingList = buildingService.getAllBuildingWithType(buildingClass);
-        return new ResponseEntity<>(String.valueOf(buildingList.get(0).getWorkforce()), HttpStatus.OK) ;
-    }
+    // @GetMapping("/get")
+    // public ResponseEntity<String> getMethodName(@RequestParam String buildingType) throws ReflectiveOperationException  {
+    //     String fullyQualifiedName = "com.example.citygame.model.productionbuildings.";
+    //     Class<? extends ProductionBuilding> buildingClass = (Class<? extends ProductionBuilding>) Class.forName(fullyQualifiedName + buildingType);
+    //     List<ProductionBuilding> buildingList = buildingService.getAllBuildingWithType(buildingClass);
+    //     return new ResponseEntity<>(String.valueOf(buildingList.get(0).getWorkforce()), HttpStatus.OK) ;
+    // }
 
     @GetMapping("/test")
     public ResponseEntity<HttpStatus> testFunction() {
